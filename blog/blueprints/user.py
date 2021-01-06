@@ -14,6 +14,8 @@ def add_user():
         return render_template('user/index.html')
     else:
         username = request.form['username']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
         password = request.form['password']
 
         # get the DB connection
@@ -22,7 +24,7 @@ def add_user():
         # insert user into DB
         try:
             # execute our insert SQL statement
-            db.execute("INSERT INTO user (username, password) VALUES (?, ?);", (username, password))
+            db.execute("INSERT INTO user (username, first_name, last_name, password) VALUES (?, ?, ?, ?);", (username, first_name, last_name, password))
 
             # write changes to DB
             db.commit()

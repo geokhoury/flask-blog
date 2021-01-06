@@ -5,6 +5,8 @@ DROP TABLE IF EXISTS post;
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
   password TEXT NOT NULL
 );
 
@@ -21,14 +23,14 @@ CREATE TABLE post (
 -- Create some dummy data
 
 ---- Create some users
-INSERT INTO user (username, password)
-VALUES ("bert", "1234");
+INSERT INTO user (username, first_name, last_name, password)
+VALUES ("bert", "malak", "ghanom", "1234");
 
-INSERT INTO user (username, password)
-VALUES ("cookie", "1234");
+INSERT INTO user (username, first_name, last_name, password)
+VALUES ("cookie", "Goerge", "Khoury", "1234");
 
-INSERT INTO user (username, password)
-VALUES ("ernie", "1234");
+INSERT INTO user (username, first_name, last_name, password)
+VALUES ("ernie", "abdullah", "Ahmad", "1234");
 
 ---- Create some posts
 INSERT INTO post (author_id, created, title, body)
