@@ -1,39 +1,49 @@
 from flask import Blueprint, render_template,request ,redirect,session
 from blog.db import get_db
 import sqlite3
+from ..forms import LoginForm
 
 # define our blueprint
 login_bp = Blueprint('login', __name__)
 
 @login_bp.route('/login', methods =['POST','GET'])
 def login():
-    if request.method == "GET":
-        # render the login template
-        return render_template('login/login.html')
-    else:
-        # read values from the login form
-        username= request.form['username']
-        password = request.form['password']
+    # create instance of our form
+    login_form = LoginForm()
+
+    # handle form submission
+    if login_form.validate_on_submit():
+
+        # read post values from the form
+        username = login_form.username.data
+        password = login_form.password.data
 
         # get the DB connection
         db = get_db()
-        
-        # insert user into db
+
+        # authenticate the user
+
         try:
-            # get user by username
+            # fetch user if the username exists in the DB
             user= db.execute('SELECT * FROM user WHERE username LIKE ?',(username,)).fetchone()
-            # check if username exists
-            if user  != None:
-                # check if credentials are valid
-                if user['username'] == username and user['password'] == password:
-                    # store the user ID in the session  
-                    session['uid']= user['id']  
-                    session['username'] = user['username']
-                    return redirect("/posts")
+
+            # check if the user was found and the password matches
+            if (user) and (user['password'] == password):
+                session['uid'] = user['id']
+                session['username']=user['username']
+
+                # redirect the user after login
+                return redirect("/posts")
+            else:
+                # redirect to 404 if the login was invalid
+                return redirect("/404")
 
         except sqlite3.Error as er:
             print('SQLite error: %s' % (' '.join(er.args)))
             return redirect("/404")
+
+    # redner the login template
+    return render_template("login/login.html", form = login_form)
 
 @login_bp.route('/session')
 def show_session():
