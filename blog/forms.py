@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm 
-from wtforms import StringField,TextAreaField,SubmitField,PasswordField
+from wtforms import StringField,TextAreaField,SubmitField,PasswordField,validators
 
 class AddPostForm(FlaskForm):
     title=StringField("Enter a title")
@@ -17,3 +17,10 @@ class EditUserForm(FlaskForm):
     biography = TextAreaField("Enter your biography")
     submit=SubmitField("Update User")
 
+class EditPasswordForm(FlaskForm):
+    old_password=PasswordField("Enter your old password")
+    new_password=PasswordField('New Password', [validators.DataRequired(),validators.EqualTo('confirm', message='Passwords must match')])
+    confirm = PasswordField('Repeat Password')
+    submit=SubmitField("update password")
+   
+   

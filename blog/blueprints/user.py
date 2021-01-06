@@ -2,6 +2,7 @@ import sqlite3
 from flask import Blueprint, render_template, request, redirect,session
 from blog.db import get_db
 from ..forms import EditUserForm
+from ..forms import EditPasswordForm
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
@@ -79,6 +80,45 @@ def edit_user():
 
     # redner the login template
     return render_template("user/edit-user.html", form = edit_user_form)
+
+
+@user_bp.route('/edit/password', methods=['GET', 'POST'])
+def edit_password():
+    
+    # create instance of our form
+    edit_password_form = EditPasswordForm()
+    
+    
+    if edit_password_form.validate_on_submit():
+
+        
+
+        # read post values from the form
+        old_password = edit_password_form.old_password.data
+        new_password = edit_password_form.new_password.data
+        confirm = edit_password_form.confirm.data
+
+       
+        # get the DB connection
+        db = get_db()
+        
+        try:
+            # update session
+            session['password'] = confirm
+            # update user information
+            db.execute(f"""UPDATE user SET password = '{session['password']}' WHERE id = '{session['uid']}'   """)
+            db.commit()
+            
+            
+            
+
+        except sqlite3.Error as er:
+            print('SQLite error: %s' % (' '.join(er.args)))
+            return redirect("/404")
+
+    # redner the login template
+    return render_template("user/edit-password.html", form = edit_password_form)
+
 
 
 @user_bp.route('/users')
