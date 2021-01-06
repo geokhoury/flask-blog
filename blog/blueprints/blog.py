@@ -2,9 +2,12 @@ from flask import Blueprint, render_template,request ,session, redirect
 from blog.db import get_db
 import sqlite3
 import datetime
+from ..forms import AddPostForm
 
 # define our blueprint
 blog_bp = Blueprint('blog', __name__)
+
+
 
 @blog_bp.route('/')
 @blog_bp.route('/posts')
@@ -24,11 +27,15 @@ def index():
 
 @blog_bp.route('/add/post', methods = ['GET', 'POST'])
 def add_post():
-    if request.method == 'POST':
 
+    # create instance of our form
+    add_post_form = AddPostForm()
+
+    # handle form submission
+    if add_post_form.validate_on_submit():
         # read post values from the form
-        title = request.form['title']
-        body = request.form['body-post']
+        title = add_post_form.title.data
+        body = add_post_form.body.data
 
         # read the 'uid' from the session for the current logged in user
         author_id = session['uid']
@@ -36,23 +43,18 @@ def add_post():
         # get the DB connection
         db = get_db()
         
-        # insert post into database
         try:
-            # execute the SQL insert statement
+            # insert post into database
             db.execute("INSERT INTO post (author_id, title, body) VALUES (?, ?,?);", (author_id,title, body))
             
             # commit changes to the database
             db.commit()
             
-            return redirect('/posts') 
+            return redirect('/posts')
 
         except sqlite3.Error as er:
             print('SQLite error: %s' % (' '.join(er.args)))
             return redirect("/404")
-    else:
-        # if the user is not logged in, redirect to '/login' 
-        if "uid" not in session:
-            return redirect('/login')
-        
-        # else, render the template
-        return render_template("blog/add-post.html")
+
+    # render the template
+    return render_template("blog/add-post.html",form=add_post_form)

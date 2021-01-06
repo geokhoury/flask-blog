@@ -8,33 +8,17 @@
 <!-- content block -->
 {% block content %}
 <form method="POST" action="">
+  {{form.hidden_tag()}}
   <div class="row">
-    <div class="col-md-6 mb-3">
-      <label for="title">Post Title:</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        placeholder="Enter a title"
-        required
-      />
+   {{form.title.label}}
+   {{form.title()}}
     </div>
-    <div class="col-md-6 mb-3">
-      <label for="body-post">Post Body:</label>
-      <textarea
-        type="text"
-        class="form-control"
-        id="body-post"
-        name="body-post"
-        placeholder="Enter your text"
-        required=""
-      ></textarea>
-    </div>
-  </div>
+    <div class="row">
+      {{form.body.label}}
+      {{form.body()}}
+       </div>
+    
   <hr class="mb-4" />
-  <button class="btn btn-primary btn-lg btn-block" type="submit">
-    Create post
-  </button>
+  {{form.submit()}}
 </form>
 {% endblock %}
