@@ -14,7 +14,7 @@
     <div>
       <h1>{{ post['title'] }}</h1>
       <d iv class="about">
-        by {{ post['username'] }} on {{ post['created'] }}
+        by {{ post['first_name'] | title}} {{post['last_name'] | title}} on {{ post['created'] }}
       </div>
     </div>
   </header>
