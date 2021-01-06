@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Edit User{% endblock %}</h1>
+{% endblock %}
+
+<!-- content block -->
+{% block content %}
+<form method="POST" action="">
+  {{form.hidden_tag()}}
+  <div class="row">
+    {{form.first_name.label}}
+    {{form.first_name()}}
+  </div>
+  <div class="row">
+    {{form.last_name.label}}
+    {{form.last_name()}}
+  </div>
+  <div class="row">
+    {{form.biography.label}}
+    {{form.biography()}}
+  </div>
+
+  <hr class="mb-4" />
+  {{form.submit()}}
+</form>
+{% endblock %}

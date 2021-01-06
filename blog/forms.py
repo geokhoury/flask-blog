@@ -11,5 +11,9 @@ class LoginForm(FlaskForm):
     password=PasswordField("Enter your password")
     submit=SubmitField("Login")
 
-    
+class EditUserForm(FlaskForm):
+    first_name = StringField("Enter your first name")
+    last_name = StringField("Enter your last name")
+    biography = TextAreaField("Enter your biography")
+    submit=SubmitField("Update User")
 

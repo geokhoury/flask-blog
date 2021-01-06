@@ -31,6 +31,10 @@ def login():
             if (user) and (user['password'] == password):
                 session['uid'] = user['id']
                 session['username']=user['username']
+                session['first_name'] = user['first_name']
+                session['last_name'] = user['last_name']
+                session['biography'] = user['biography']
+                
 
                 # redirect the user after login
                 return redirect("/posts")
