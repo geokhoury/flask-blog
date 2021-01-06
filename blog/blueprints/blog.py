@@ -23,7 +23,7 @@ def index():
     ).fetchall()
 
     # render 'blog' blueprint with posts
-    return render_template('blog/index.html', posts=posts)
+    return render_template('blog/posts.html', posts=posts)
 
 @blog_bp.route('/add/post', methods = ['GET', 'POST'])
 def add_post():

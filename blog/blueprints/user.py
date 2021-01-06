@@ -11,7 +11,7 @@ def add_user():
     
     if request.method == 'GET':
         # render add user blueprint
-        return render_template('user/index.html')
+        return render_template('user/add-user.html')
     else:
         username = request.form['username']
         password = request.form['password']
