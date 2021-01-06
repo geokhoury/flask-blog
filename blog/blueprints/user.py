@@ -15,6 +15,9 @@ def add_user():
     else:
         username = request.form['username']
         password = request.form['password']
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        biography = request.form['biography']
 
         # get the DB connection
         db = get_db()
@@ -22,7 +25,7 @@ def add_user():
         # insert user into DB
         try:
             # execute our insert SQL statement
-            db.execute("INSERT INTO user (username, password) VALUES (?, ?);", (username, password))
+            db.execute("INSERT INTO user (username, first_name, last_name, biography, password) VALUES (?, ?, ?, ?, ?);", (username, first_name, last_name, biography, password))
 
             # write changes to DB
             db.commit()
