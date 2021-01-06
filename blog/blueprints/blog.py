@@ -17,13 +17,13 @@ def index():
 
     # retrieve all posts
     posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, body, created, author_id, username,first_name,last_name'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
 
     # render 'blog' blueprint with posts
-    return render_template('blog/index.html', posts=posts)
+    return render_template('blog/posts.html', posts=posts)
 
 @blog_bp.route('/add/post', methods = ['GET', 'POST'])
 def add_post():

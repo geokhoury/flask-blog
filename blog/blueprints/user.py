@@ -1,6 +1,7 @@
 import sqlite3
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect,session
 from blog.db import get_db
+from ..forms import EditUserForm
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
@@ -11,7 +12,7 @@ def add_user():
     
     if request.method == 'GET':
         # render add user blueprint
-        return render_template('user/index.html')
+        return render_template('user/add-user.html')
     else:
         username = request.form['username']
         password = request.form['password']
@@ -36,6 +37,50 @@ def add_user():
             print('SQLite error: %s' % (' '.join(er.args)))
             return redirect("/404")
 
+
+@user_bp.route('/edit/user', methods=['GET', 'POST'])
+def edit_user():
+    
+    # create instance of our form
+    edit_user_form = EditUserForm()
+    if request.method == "GET":
+        edit_user_form.first_name.data = session['first_name']
+        edit_user_form.last_name.data = session['last_name']
+        edit_user_form.biography.data = session['biography']
+
+    # handle form submission
+    
+    if edit_user_form.validate_on_submit():
+
+        
+
+        # read post values from the form
+        first_name = edit_user_form.first_name.data
+        last_name = edit_user_form.last_name.data
+        biography = edit_user_form.biography.data
+
+        print(first_name,last_name)
+        # get the DB connection
+        db = get_db()
+        
+        try:
+            # update user information
+            db.execute(f"""UPDATE user SET first_name = '{first_name}', last_name ='{last_name}',biography = '{biography}' WHERE id = '{session['uid']}'   """)
+            db.commit()
+            
+            # update session
+            session['first_name'] = first_name
+            session['last_name'] = last_name
+            session['biography'] = biography
+
+        except sqlite3.Error as er:
+            print('SQLite error: %s' % (' '.join(er.args)))
+            return redirect("/404")
+
+    # redner the login template
+    return render_template("user/edit-user.html", form = edit_user_form)
+
+
 @user_bp.route('/users')
 def get_users():
     # get the DB connection
@@ -46,3 +91,5 @@ def get_users():
 
     # render 'list.html' blueprint with users
     return render_template('user/list.html', users=users)
+
+
