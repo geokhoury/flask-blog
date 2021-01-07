@@ -1,7 +1,8 @@
 import sqlite3
-from flask import Blueprint, render_template, request, redirect,session
+from flask import Blueprint, render_template, request, redirect,session,flash
 from blog.db import get_db
-from ..forms import EditUserForm
+from ..forms import EditUserForm,AddUserForm
+
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
@@ -9,34 +10,43 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/add/user', methods=['GET', 'POST'])
 def add_user():
-    
-    if request.method == 'GET':
-        # render add user blueprint
-        return render_template('user/add-user.html')
-    else:
-        username = request.form['username']
-        password = request.form['password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
-        biography = request.form['biography']
+
+    # create instance of our form
+    add_user_form = AddUserForm()
+
+    # handle form submission
+    if add_user_form.validate_on_submit():
+        # read post values from the form
+        username = add_user_form.username.data
+        password = add_user_form.password.data
+        first_name = add_user_form.first_name.data
+        last_name = add_user_form.last_name.data
+        biography = add_user_form.biography.data
+
+        if add_user_form.validate():
+            print(add_user_form.errors)
 
         # get the DB connection
         db = get_db()
-
-        # insert user into DB
+        
         try:
-            # execute our insert SQL statement
-            db.execute("INSERT INTO user (username, first_name, last_name, biography, password) VALUES (?, ?, ?, ?, ?);", (username, first_name, last_name, biography, password))
-
-            # write changes to DB
+            # insert post into database
+            db.execute("INSERT INTO user (username, password, first_name, last_name,biography) VALUES (?, ?,?,?,?);", (username, password, first_name, last_name,biography))
+            
+            # commit changes to the database
             db.commit()
             
-            return redirect("/users")
+            # flash sin up masseag to user
+            flash("Account successfully created! Please log in.")
+
+            return redirect('/login')
 
         except sqlite3.Error as er:
             print('SQLite error: %s' % (' '.join(er.args)))
             return redirect("/404")
 
+    # render the template
+    return render_template("user/add-user.html",form=add_user_form)
 
 @user_bp.route('/edit/user', methods=['GET', 'POST'])
 def edit_user():
