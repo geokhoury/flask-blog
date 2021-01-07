@@ -30,7 +30,7 @@
       <!-- card header -->
       <div class="card-header">
         <h5 class="card-title">{{ post['title'] }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"> by {{ post['first_name'] | title}} {{post['last_name'] | title}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}"> {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
       </div>
 
       <!-- card body -->

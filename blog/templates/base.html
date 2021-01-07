@@ -43,7 +43,7 @@
                   {{session['username']}}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="{{url_for('login.login')}}"><i class="fas fa-user-circle"></i>
+                  <li><a class="dropdown-item" href="{{url_for('user.view_user',id=session['uid'])}}"><i class="fas fa-user-circle"></i>
                       Profile</a></li>
                   <li><a class="dropdown-item" href="{{url_for('login.logout')}}"><i class="fas fa-unlock-alt"></i> Change Password</a></li>
                   <li>
