@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Blueprint, render_template, request, redirect,session
+from flask import Blueprint, render_template, request, redirect,session,flash
 from blog.db import get_db
 from ..forms import EditUserForm
 from ..forms import EditPasswordForm
@@ -103,12 +103,11 @@ def edit_password():
         db = get_db()
         
         try:
-            # update session
-            session['password'] = confirm
-            # update user information
-            db.execute(f"""UPDATE user SET password = '{session['password']}' WHERE id = '{session['uid']}'   """)
-            db.commit()
             
+            # update user information
+            db.execute(f"""UPDATE user SET password = '{confirm}' WHERE id = '{session['uid']}'   """)
+            db.commit()
+            flash('password changed')
             
             
 
