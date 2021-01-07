@@ -1,28 +1,41 @@
 {% extends 'base.html' %}
-
-<!-- header block -->
-{% block header %}
-<h1>{% block title %}Edit User{% endblock %}</h1>
-{% endblock %}
+<!-- title -->
+{% block title %}Flask Blog - Edit User{% endblock %}
 
 <!-- content block -->
-{% block content %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-    {{form.first_name.label}}
-    {{form.first_name()}}
+{% block main %}
+
+<!-- edit user -->
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
+    Edit User
+    </h3>
   </div>
-  <div class="row">
-    {{form.last_name.label}}
-    {{form.last_name()}}
-  </div>
-  <div class="row">
-    {{form.biography.label}}
-    {{form.biography()}}
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    
+  <form method="POST">
+    {{form.hidden_tag()}}
+    <div class="mb-3">
+      {{form.first_name.label}}
+      {{form.first_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.last_name.label}}
+    {{form.last_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.biography.label}}
+      {{form.biography(class_="form-control")}}
+    </div>
+    <div class="my-3">
+    {{form.submit(class_="btn btn-success")}}
   </div>
 
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
+  </form>
+</div>
+</div>
 {% endblock %}
