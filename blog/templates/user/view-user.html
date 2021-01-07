@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Profile {% endblock %}
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+<div class="row my-5">
+    <div class="col-lg-8">
+      <h3>
+    {{user['first_name']}} {{user['last_name']}} ({{user['username']}})</h3>
+
+    </div>
+
+   </div>
+  
+  <div class="row">
+    
+      <div>{{user['biography']}}</div>
+      {%if user['id']==session['uid'] %}
+      <div><a class=" btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
+      {%endif%}
+
+  
+  </div>
+
+{%endblock%}
