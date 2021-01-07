@@ -1,40 +1,54 @@
 {% extends 'base.html' %}
-
-<!-- header block -->
-{% block header %}
-<h1>{% block title %}Add User{% endblock %}</h1>
-{% endblock %}
+<!-- title -->
+{% block title %}Flask Blog - Add User{% endblock %}
 
 <!-- content block -->
-{% block content %}
-<form method="POST" action="">
-  <div class="row">
-    <div class="col-md-6 mb-3">
-      <label for="username">Username:</label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="Enter a username" required />
-    </div>
+{% block main %}
 
-    <div class="col-md-6 mb-3">
-      <label for="password">Password:</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="" />
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="first_name">First name:</label>
-      <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter your first name" required />
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="last_name">Last name:</label>
-      <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter your last name" required />
-    </div>
-    </div>
-    <div class="col-md-6 mb-3">
-      <label for="biography">Biography:</label>
-      <textarea type="text" class="form-control" id="biography" name="biography" placeholder="Enter a biography" required ></textarea>
-    </div>
-  </div>
-  <hr class="mb-4" />
-  <button class="btn btn-primary btn-lg btn-block" type="submit">
+<!-- posts header -->
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
     Add User
-  </button>
-</form>
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    
+  <form method="POST">
+    {{form.hidden_tag()}}
+
+    <div class="mb-3">
+      {{form.username.label}}
+      {{form.username(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.password.label}}
+    {{form.password(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.confirm_password.label}}
+    {{form.confirm_password(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.first_name.label}}
+      {{form.first_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.last_name.label}}
+    {{form.last_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.biography.label}}
+      {{form.biography(class_="form-control")}}
+    </div>
+    <div class="my-3">
+    {{form.submit(class_="btn btn-success")}}
+  </div>
+
+  </form>
+</div>
+</div>
 {% endblock %}

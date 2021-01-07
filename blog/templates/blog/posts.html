@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 <!-- title -->
-{% block title %}Flask Blog - Posts{% endblock %}
-
+{% block title %}Flask Blog - Recent Posts{% endblock %}
 
 <!-- content block -->
 {% block main %}
@@ -10,12 +9,14 @@
 <div class="row my-5">
   <div class="col-lg-8">
     <h3>
-      Posts
+    Recent Posts
     </h3>
   </div>
+  {%if session['uid'] %}
   <div class="col-lg-4">
     <a class="btn btn-success">Add Post</a>
   </div>
+  {%endif%}
 </div>
 
 <div class="row">

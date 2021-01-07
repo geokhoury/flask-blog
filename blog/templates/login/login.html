@@ -1,28 +1,26 @@
 {% extends 'base.html' %}
 
-<!-- header block -->
-{% block header %}
-<h1>{% block title %}Login{% endblock %}</h1>
-{% endblock %}
+<!-- title -->
+{% block title %}Flask Blog - Posts{% endblock %}
 
-<!-- content block -->
-{% block content %} {% if message %}
-<div>
-  {{message}}
+<!-- main block -->
+{% block main %}
+
+<!-- login  -->
+<div class="row my-5">
+  <form method="POST">
+    {{form.hidden_tag()}}
+
+    <div class="mb-3">
+      {{form.username.label}}
+      {{form.username(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.password.label}}
+    {{form.password(class_="form-control")}}
+    </div>
+    {{form.submit(class_="btn btn-success")}}
+
+  </form>
 </div>
-{% endif %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-    {{form.username.label}}
-    {{form.username()}}
-  </div>
-  <div class="row">
-    {{form.password.label}}
-    {{form.password()}}
-  </div>
-
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
 {% endblock %}
