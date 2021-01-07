@@ -17,4 +17,6 @@
 
 {% if not loop.last %}
 <hr />
-{% endif %} {% endfor %} {% endblock %}
+{% endif %} {% endfor %} 
+<hr>
+<center><a class="btn btn-primary" href="{{ url_for('user.add_user') }}" role="button" >Add User</a></center>{% endblock %}
