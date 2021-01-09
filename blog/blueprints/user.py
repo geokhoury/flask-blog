@@ -54,6 +54,7 @@ def edit_user(id):
     if request.method == "GET":
         edit_user_form.first_name.data = session['first_name']
         edit_user_form.last_name.data = session['last_name']
+        edit_user_form.picture_url.data = 'Enter the URL for your profile picture'
         edit_user_form.biography.data = session['biography']
 
     # handle form submission
@@ -65,6 +66,7 @@ def edit_user(id):
         # read post values from the form
         first_name = edit_user_form.first_name.data
         last_name = edit_user_form.last_name.data
+        picture_url = edit_user_form.picture_url.data
         biography = edit_user_form.biography.data
 
         print(first_name,last_name)
@@ -79,6 +81,7 @@ def edit_user(id):
             # update session
             session['first_name'] = first_name
             session['last_name'] = last_name
+            session['picture_url'] = picture_url
             session['biography'] = biography
 
             #  flash masseag
