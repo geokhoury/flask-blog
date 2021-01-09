@@ -14,7 +14,7 @@
   </div>
   {%if session['uid'] %}
   <div class="col-lg-4">
-    <a class="btn btn-success">Add Post</a>
+    <a class="btn btn-success " href="{{url_for('blog.add_post')}}">Add Post</a>
   </div>
   {%endif%}
 </div>

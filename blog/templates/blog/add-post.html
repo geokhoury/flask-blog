@@ -1,24 +1,34 @@
 {% extends 'base.html' %}
-
-<!-- header block -->
-{% block header %}
-<h1>{% block title %}Add Post{% endblock %}</h1>
-{% endblock %}
+<!-- title -->
+{% block title %}Flask Blog - Add post{% endblock %}
 
 <!-- content block -->
-{% block content %}
+{% block main %}
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
+    Add post
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+
 <form method="POST" action="">
   {{form.hidden_tag()}}
-  <div class="row">
+  <div class="mb-3">
    {{form.title.label}}
    {{form.title()}}
     </div>
-    <div class="row">
+    <div class="mb-3" >
       {{form.body.label}}
       {{form.body()}}
        </div>
     
-  <hr class="mb-4" />
-  {{form.submit()}}
+       <div class="my-3">
+        {{form.submit(class_="btn btn-success")}}
+      </div>
+
 </form>
 {% endblock %}
