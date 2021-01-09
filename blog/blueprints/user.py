@@ -113,9 +113,10 @@ def view_user(id):
 
     # get user by id
     user = db.execute(f'''select * from user  WHERE id = {id}''').fetchone()
+    posts = db.execute(f'''select * from post  WHERE id = {id}''').fetchall()
 
     # render 'profile.html' blueprint with user
-    return render_template('user/view-user.html', user=user)
+    return render_template('user/view-user.html', user=user , posts=posts)
 
 
 
