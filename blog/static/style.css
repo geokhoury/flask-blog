@@ -1,0 +1,10 @@
+:root{
+    --main:#008891;
+    --grey:#e7e7de;
+    --secondary:#00587a;
+    --heavyblur:#0f3057
+}
+
+.bg-nav{
+    background-color:var(--main) ; 
+  }
