@@ -9,22 +9,21 @@
 <!-- posts header -->
 
 <div class="row my-5">
-  <div class="col md-3">
-  <div class="col-lg-8">
+  <div class="col-lg-8 text-center">
     <h3>
       {{user['first_name'] | title}} {{user['last_name'] | title}} ({{user['username']}})</h3>
 
   </div>
-</div>
+
 </div>
 
-<div class="row">
-
+<div class="row md-3">
+<div class="col">
   <div>{{user['biography']}}</div>
   {%if user['id']==session['uid'] %}
-  <div><a class=" btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
+  <div><a class="btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
   {%endif%}
-
+</div>
 
 </div>
 

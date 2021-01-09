@@ -21,15 +21,19 @@
     {{form.hidden_tag()}}
     <div class="mb-3">
       {{form.first_name.label}}
-      {{form.first_name(class_="form-control")}}
+      {{form.first_name(class_="form-control text-muted")}}
     </div>
     <div class="mb-3">
       {{form.last_name.label}}
-    {{form.last_name(class_="form-control")}}
+    {{form.last_name(class_="form-control text-muted")}}
+    </div>
+    <div class="mb-3">
+      {{form.picture_url.label}}
+      {{form.picture_url(class_="form-control text-muted")}}
     </div>
     <div class="mb-3">
       {{form.biography.label}}
-      {{form.biography(class_="form-control")}}
+      {{form.biography(class_="form-control text-muted")}}
     </div>
     <div class="my-3">
     {{form.submit(class_="btn btn-success")}}
