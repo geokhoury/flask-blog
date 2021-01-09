@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template,request ,session, redirect
+from flask import Blueprint, render_template,request ,session, redirect, flash
 from blog.db import get_db
 import sqlite3
 import datetime
@@ -58,3 +58,41 @@ def add_post():
 
     # render the template
     return render_template("blog/add-post.html",form=add_post_form)
+
+
+@blog_bp.route('/posts/view/<int:id>' , methods=['post','get'])
+def view_post(id):
+    if request.method == 'POST':
+      # create instance of our form
+
+        # get the DB connection
+            db = get_db()
+            comment = request.form['comment']
+            try:
+            # insert comment into database
+                db.execute("INSERT INTO comments (user_id , post_id , body) VALUES (?,?,?); ", (session['uid'], id ,comment ))
+            
+            # commit changes to the database
+                db.commit()
+            
+            # flash sin up masseag to user
+                flash("Comment successfully added!.")
+                
+                post = db.execute(f'''select * from post WHERE id = {id}''').fetchone()
+                user = db.execute(f'''select * from user WHERE id = {post['author_id']}''').fetchone()
+
+                return render_template("blog/view.html", post=post , user=user )
+
+            except sqlite3.Error as er:
+                ('SQLite error: %s' % (' '.join(er.args)))
+                return redirect("/404")
+    else:
+
+        db = get_db()
+        # get post by id
+        post = db.execute(f'''select * from post WHERE id = {id}''').fetchone()
+        user = db.execute(f'''select * from user WHERE id = {post['author_id']}''').fetchone()
+
+        return render_template("blog/view.html", post=post , user=user)
+
+
