@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
+            <h2 class="mb-3">Title: {{post['title']}}</h2>
+            <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}"> {{user['first_name']}} {{user['last_name']}}</a></h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p>{{post['body']}}</p></div>
+    </div>
+
+    <div class="comments my-5">
+        <div class="row">
+           <div class="col">
+            <form method="post">
+                <div class="form-group w-100">
+                  <label for="comment">Enter your comment</label>
+                  <input type="text" name="comment" id="comment" class="form-control w-100" placeholder="Enter Your comment here" aria-describedby="helpId">
+                </div>
+                <button class="btn btn-primary" type="submit">Add <i class="fa fa-comments" aria-hidden="true"></i></button>
+
+            </form>
+           </div>
+        </div>
+        <div class="row mt-2">
+            
+            <div class="alert alert-info w-100">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae culpa est qui eos facilis numquam, ab voluptas impedit odio fuga.</div>
+        </div>
+        </div>
+</div>
+
+
+
+{% endblock main %}

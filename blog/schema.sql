@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS comments;
+
 
 -- Create 'User' table
 CREATE TABLE user (
@@ -21,6 +23,16 @@ CREATE TABLE post (
   FOREIGN KEY (author_id) REFERENCES user (id)
 );
 
+-- Create 'Comments' table
+CREATE TABLE comments (
+	"comment_id"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"user_id"	INTEGER,
+  "post_id"	INTEGER,
+	"title"	TEXT,
+	"body"	TEXT,
+	FOREIGN KEY("user_id") REFERENCES "user"("id"),
+  FOREIGN KEY("post_id") REFERENCES "post"("id")
+);
 -- Create some dummy data
 
 ---- Create some users

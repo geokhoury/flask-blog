@@ -6,17 +6,12 @@
 {% block main %}
 
 <!-- edit user -->
-<div class="row my-5">
-  <div class="col-lg-8">
+<div class="container-fluid my-5">
+  <div class="col mx-auto card bg-light p-5">
     <h3>
     Edit User
     </h3>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-8">
-    
+        
   <form method="POST">
     {{form.hidden_tag()}}
     <div class="mb-3">
@@ -27,15 +22,21 @@
       {{form.last_name.label}}
     {{form.last_name(class_="form-control")}}
     </div>
-    <div class="mb-3">
+    <div class="form-control-group mb-3">
       {{form.biography.label}}
       {{form.biography(class_="form-control")}}
     </div>
+
     <div class="my-3">
     {{form.submit(class_="btn btn-success")}}
   </div>
 
   </form>
+  </div>
+
+
+
 </div>
-</div>
+
+
 {% endblock %}
