@@ -8,7 +8,8 @@ CREATE TABLE user (
   password TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  biography TEXT
+  biography TEXT,
+  photo BLOB
 );
 
 -- Create 'Post' table

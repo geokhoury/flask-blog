@@ -6,17 +6,16 @@
 {% endblock %}
 
 <!-- content block -->
-{% block content %} {% for user in users %}
+{% block main %} {% for user in users %}
 <article class="post">
-  <header>
-    <div>
-      <h1>{{ user['username'] }}</h1>
-    </div>
-  </header>
+    <header>
+        <div>
+            <h1>{{ user['username'] }}</h1>
+        </div>
+    </header>
 </article>
 
 {% if not loop.last %}
-<hr />
-{% endif %} {% endfor %} 
+<hr /> {% endif %} {% endfor %}
 <hr>
-<center><a class="btn btn-primary" href="{{ url_for('user.add_user') }}" role="button" >Add User</a></center>{% endblock %}
+<center><a class="btn btn-primary" href="{{ url_for('user.add_user') }}" role="button">Add User</a></center>{% endblock %}

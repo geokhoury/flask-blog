@@ -6,19 +6,16 @@
 {% endblock %}
 
 <!-- content block -->
-{% block content %}
+{% block main %}
 <form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-   {{form.title.label}}
-   {{form.title()}}
+    {{form.hidden_tag()}}
+    <div class="row">
+        {{form.title.label}} {{form.title(class_="form-control")}}
     </div>
     <div class="row">
-      {{form.body.label}}
-      {{form.body()}}
-       </div>
-    
-  <hr class="mb-4" />
-  {{form.submit()}}
+        {{form.body.label}} {{form.body(class_="form-control")}}
+    </div>
+
+    <hr class="mb-4" /> {{form.submit(class_="btn btn-success")}}
 </form>
 {% endblock %}

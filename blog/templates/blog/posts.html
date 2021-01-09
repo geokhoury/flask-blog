@@ -7,48 +7,53 @@
 
 <!-- posts header -->
 <div class="row my-5">
-  <div class="col-lg-8">
-    <h3>
-    Recent Posts
-    </h3>
-  </div>
-  {%if session['uid'] %}
-  <div class="col-lg-4">
-    <a class="btn btn-success">Add Post</a>
-  </div>
-  {%endif%}
+    <div class="col-lg-8">
+        <h3>
+            Recent Posts
+        </h3>
+    </div>
+    {%if session['uid'] %}
+    <div class="col-lg-4">
+        <a class="btn btn-success" href="{{url_for('blog.add_post')}} ">Add Post</a>
+    </div>
+    {%endif%}
 </div>
 
-<div class="row">
+<div class=" row ">
 
-  {% for post in posts %}
-  <div class="col-lg-4 col-md-6 col-sm-12">
+    {% for post in posts %}
+    <div class="col-lg-4 col-md-6 col-sm-12 ">
 
-    <!-- post card -->
-    <div class="card bg-light mb-3">
+        <!-- post card -->
+        <div class="card bg-light mb-3 ">
 
-      <!-- card header -->
-      <div class="card-header">
-        <h5 class="card-title">{{ post['title'] }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}"> {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
-      </div>
+            <!-- card header -->
+            <div class="card-header ">
+                <h5 class="card-title ">{{ post['title'] }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted "> by <a href="{{url_for( 'user.view_user',id=post[ 'author_id'])}} "> {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
+            </div>
 
-      <!-- card body -->
-      <div class="card-body">
-        <p class="card-text">{{ post['body'] }}</p>
-        <p class="card-text">{{ post['created'] }}</p>
+            <!-- card body -->
+            <div class="card-body ">
+                <p class="card-text ">{{ post['body'] }}</p>
+                <p class="card-text ">{{ post['created'] }}</p>
 
-        <a href="#" class="card-link">Read more</a>
-        <a href="#" class="card-link">More by this author</a>
-      </div>
-        <!-- <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">
-            on 
+                <a href="# " class="card-link ">Read more</a>
+                <a href="# " class="card-link ">More by this author</a> {%if session['uid']==post['author_id']%}
+                <a class="btn btn-success" type="submit" href="{{url_for('blog.edit_post',id=session['uid'])}}">edit</a>
+                <form action="{{url_for( 'blog.delete_post',id=session[ 'uid'])}}" method="post">
+                    <input type="hidden" name="_method " value="DELETE">
+                    <input type="submit" value="Delete" class="btn btn-danger">{%endif%}
+            </div>
+
         </div>
-      <p class="body"></p> -->
-      </div>
-  </div>
-{%endfor%}
+    </div>
+
+    {%endfor%}
 </div>
+
 {% endblock %}
+
+<form action="{{url_for( 'blog.delete_post',id=session[ 'uid'])}}" method="post">
+    <input type="hidden" name="_method " value="DELETE">
+    <input type="submit" value="Delete" class="btn btn-danger">

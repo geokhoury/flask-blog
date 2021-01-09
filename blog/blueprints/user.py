@@ -6,14 +6,16 @@ from ..forms import EditUserForm,AddUserForm
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
-
-
+# def convertToBinaryData(filename):
+#     #Convert digital data to binary format
+#     with open(filename, 'rb') as file:
+#         blobData = file.read()
+#     return blobData
 @user_bp.route('/add/user', methods=['GET', 'POST'])
 def add_user():
 
     # create instance of our form
     add_user_form = AddUserForm()
-
     # handle form submission
     if add_user_form.validate_on_submit():
         # read post values from the form
@@ -22,14 +24,14 @@ def add_user():
         first_name = add_user_form.first_name.data
         last_name = add_user_form.last_name.data
         biography = add_user_form.biography.data
+        photo=add_user_form.photo.data
 
 
         # get the DB connection
         db = get_db()
-        
         try:
             # insert post into database
-            db.execute("INSERT INTO user (username, password, first_name, last_name,biography) VALUES (?, ?,?,?,?);", (username, password, first_name, last_name,biography))
+            db.execute("INSERT INTO user (username, password, first_name, last_name,biography) VALUES (?,?,?,?,?);", (username, password, first_name, last_name,biography))
             
             # commit changes to the database
             db.commit()
@@ -95,6 +97,11 @@ def edit_user(id):
     return render_template("user/edit-user.html", form = edit_user_form)
 
 
+@user_bp.route('/user/change-password/<int:id>', methods=['GET', 'POST'])
+def change_password():
+    pass
+
+
 @user_bp.route('/users')
 def get_users():
     # get the DB connection
@@ -116,6 +123,7 @@ def view_user(id):
 
     # render 'profile.html' blueprint with user
     return render_template('user/view-user.html', user=user)
+
 
 
 
