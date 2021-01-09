@@ -6,16 +6,12 @@
 {% block main %}
 
 <!-- posts header -->
-<div class="row my-5">
-  <div class="col-lg-8">
+<div class="row my-5 justify-content-between px-5">
     <h3>
     Recent Posts
     </h3>
-  </div>
   {%if session['uid'] %}
-  <div class="col-lg-4">
-    <a class="btn btn-success">Add Post</a>
-  </div>
+    <a class="btn btn-primary text-white">Add Post</a>
   {%endif%}
 </div>
 
