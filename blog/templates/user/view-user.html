@@ -8,78 +8,80 @@
 
 <!-- posts header -->
 <div class="row my-5">
-    <div class="col-lg-8">
-      <h3>
-    {{user['first_name'] | title}} {{user['last_name'] | title}} ({{user['username']}})</h3>
+  <div class="col-lg-8 text-center mx-auto">
+    <h3>
+      {{user['first_name'] | title}} {{user['last_name'] | title}} ({{user['username']}})</h3>
 
-    </div>
-
-   </div>
-  
-  <div class="row">
-    
-      <div>{{user['biography']}}</div>
-      {%if user['id']==session['uid'] %}
-      <div><a class=" btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
-      {%endif%}
-
-  
   </div>
 
-  <div class="row">
+</div>
 
-    {% for post in posts %}
-    <div class="col-lg-4 col-md-6 col-sm-12">
-  
-      <!-- post card -->
-      <div class="card bg-light mb-3">
-  
-        <!-- card header -->
-        <div class="card-header">
-          <div class="col-2">
+<div class="row">
+
+  <div class="col text-center">
+    <div>{{user['biography']}}</div>
+    {%if user['id']==session['uid'] %}
+    <div><a class=" btn btn-success mb-3" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
+    {%endif%}
+
+  </div>
+
+</div>
+
+<div class="row">
+
+  {% for post in posts %}
+  <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
+
+    <!-- post card -->
+    <div class="card bg-light mb-3">
+
+      <!-- card header -->
+      <div class="card-header row">
+        <div class="col-10">
           <h5 class="card-title">{{ post['title'] }}</h5>
         </div>
+
         <div class="col">
-          !-- delete list -->
-                    <a href="{{url_for('remove_list',index=key)}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-trash" viewBox="0 0 16 16">
-                            <path
-                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                            <path fill-rule="evenodd"
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                        </svg>
-                    </a>
-                    
-                    <!-- edit list -->
-                    <a href="{{url_for('edit_list',index=key)}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                </a>
-          </div>  
+          <!--  delete list -->
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+              viewBox="0 0 16 16">
+              <path
+                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+              <path fill-rule="evenodd"
+                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+            </svg>
+          </a>
+
+          <!-- edit list -->
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+              viewBox="0 0 16 16">
+              <path
+                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+            </svg>
+          </a>
         </div>
-        </div>
-  
-        <!-- card body -->
-        <div class="card-body">
-          <p class="card-text">{{ post['body'] }}</p>
-          <p class="card-text">{{ post['created'] }}</p>
-  
-          <a href="#" class="card-link">Read more</a>
-          <a href="#" class="card-link">Author's Posts</a>
-        </div>
-          <!-- <div>
+      </div>
+
+      <!-- card body -->
+      <div class="card-body">
+        <p class="card-text">{{ post['body'] }}</p>
+        <p class="card-text">{{ post['created'] }}</p>
+
+        <a href="#" class="card-link">Read more</a>
+        <a href="#" class="card-link">Author's Posts</a>
+      </div>
+      <!-- <div>
             <h1>{{ post['title'] }}</h1>
             <div class="about">
               on 
           </div>
         <p class="body"></p> -->
-        </div>
     </div>
+  </div>
 
   {%endfor%}
-  </div>
+</div>
 {%endblock%}

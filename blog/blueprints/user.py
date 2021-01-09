@@ -46,3 +46,18 @@ def get_users():
 
     # render 'list.html' blueprint with users
     return render_template('user/list.html', users=users)
+
+@user_bp.route('/user/view/<int:id>')
+def view_user(id):
+    # get the DB connection
+    db = get_db()
+
+    # get user by id
+    user = db.execute(f'''select * from user  WHERE id = {id}''').fetchone()
+    posts = db.execute(f'''select * from post  WHERE author_id = {id}''').fetchall()
+    
+    return render_template('user/view-user.html', user= user, posts= posts)
+
+
+
+
