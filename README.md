@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/geokhoury/flask-blog)
+
 # Flask Blog
 
 This project is a very simple version of the flask blog app in http://flask.pocoo.org/docs/1.0/tutorial/
