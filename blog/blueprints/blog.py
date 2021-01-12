@@ -80,8 +80,9 @@ def view_post(id):
                 
                 post = db.execute(f'''select * from post WHERE id = {id}''').fetchone()
                 user = db.execute(f'''select * from user WHERE id = {post['author_id']}''').fetchone()
+                all_comments = db.execute(f'''select * from comments WHERE post_id = {id}''').fetchall()
 
-                return render_template("blog/view.html", post=post , user=user )
+                return render_template("blog/view.html", post=post , user=user, all_comments=all_comments )
 
             except sqlite3.Error as er:
                 ('SQLite error: %s' % (' '.join(er.args)))
@@ -92,7 +93,8 @@ def view_post(id):
         # get post by id
         post = db.execute(f'''select * from post WHERE id = {id}''').fetchone()
         user = db.execute(f'''select * from user WHERE id = {post['author_id']}''').fetchone()
+        all_comments = db.execute(f'''select * from comments WHERE post_id = {id}''').fetchall()
 
-        return render_template("blog/view.html", post=post , user=user)
+        return render_template("blog/view.html", post=post , user=user , all_comments=all_comments)
 
 

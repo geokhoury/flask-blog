@@ -28,7 +28,30 @@
            </div>
         </div>
         <div class="row mt-2">
-            
+            <div>
+                <table class="table alert alert-info table-hover">
+                    <thead>
+                        {%if all_comments %}
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">body</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {%endif%}
+                        {% for com in all_comments %}
+                      <tr>
+                        <th scope="row">{{com['id']}}</th>
+                        <td>{{user['first_name']}}</td>
+                        <td>{{user['last_name']}}</td>
+                        <td>{{com['body']}}</td>
+                      </tr>
+                      {%endfor%}                      
+                    </tbody>
+                  </table>
+            </div>           
             <div class="alert alert-info w-100">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae culpa est qui eos facilis numquam, ab voluptas impedit odio fuga.</div>
         </div>
         </div>
