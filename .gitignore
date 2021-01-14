@@ -1,0 +1,11 @@
+# Virtual Envionrment
+.venv
+.env
+.vscode
+
+# Python
+__pycache__/
+
+# DB instance
+instance/
+

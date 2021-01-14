@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Login{% endblock %}</h1>
+{% endblock %}
+
+<!-- content block -->
+{% block main %} {% if message %}
+<div>
+  {{message}}
+</div>
+{% endif %}
+<form method="POST" action="">
+  {{form.hidden_tag()}}
+  <div class="row">
+    {{form.username.label}}
+    {{form.username()}}
+  </div>
+  <div class="row">
+    {{form.password.label}}
+    {{form.password()}}
+  </div>
+
+  <hr class="mb-4" />
+  {{form.submit()}}
+</form>
+{% endblock %}

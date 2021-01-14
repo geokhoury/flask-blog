@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Blog - Add User{% endblock %}
+
+<!-- content block -->
+{% block main %}
+
+<!-- Add user -->
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
+    Add User
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    
+  <form method="POST">
+    {{form.hidden_tag()}}
+
+    <div class="mb-3">
+      {{form.username.label}}
+      {{form.username(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.password.label}}
+    {{form.password(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.confirm_password.label}}
+    {{form.confirm_password(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.first_name.label}}
+      {{form.first_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.last_name.label}}
+    {{form.last_name(class_="form-control")}}
+    </div>
+    <div class="mb-3">
+      {{form.biography.label}}
+      {{form.biography(class_="form-control")}}
+    </div>
+    <div class="my-3">
+    {{form.submit(class_="btn btn-success")}}
+  </div>
+
+  </form>
+</div>
+</div>
+{% endblock %}
