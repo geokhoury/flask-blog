@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Blog - User{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+<div class="col-lg-4 col-md-6 col-sm-12">
+
+    <!-- post card -->
+    <div class="card bg-light mb-3">
+
+      <!-- card header -->
+      <div class="card-header">
+        <h5 class="card-title">{{user.username}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{user.first_name}} {{user.last_name}}</h6>
+      </div>
+
+      <!-- card body -->
+      <div class="card-body">
+        <p class="card-text">{{user.biography}}</p>
+
+        <a href="#" class="card-link">More by this author</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
