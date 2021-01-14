@@ -8,7 +8,7 @@ CREATE TABLE user (
   password TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  picture_url TEXT DEFAULT 'https://content-api-us1.codeavengers.com/file/cloud/assets/profile-01.png',
+  picture_url TEXT DEFAULT 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png',
   biography TEXT
 );
 

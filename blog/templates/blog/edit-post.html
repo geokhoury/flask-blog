@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Blog - Edit User{% endblock %}
+
+<!-- content block -->
+{% block main %}
+
+<!-- edit user -->
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
+    Edit Post
+    </h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    
+  <form method="POST">
+    {{form.hidden_tag()}}
+    <div class="mb-3">
+      {{form.body.label}}
+      {{form.body(class_="form-control text-muted")}}
+    </div>
+    <div class="my-3">
+    {{form.submit(class_="btn btn-success")}}
+  </div>
+
+  </form>
+</div>
+</div>
+{% endblock %}

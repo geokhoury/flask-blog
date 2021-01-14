@@ -5,69 +5,74 @@
 <!-- content block -->
 {% block main %}
 
-<div class="row">
-  <div class="col-3"></div>
+<div class="row justify-content-center">
 
   <div class="col-6">
 
-    <div class="row my-5 mx-auto">
+    <div class="row my-5 mx-auto justify-content-center">
 
-      <img src="{{url_for('static', filename='images/p3.png')}}" width="320" height="200" alt="Profile">
+      <img src="{{user['picture_url']}}" class="rounded-circle" width="320" height="200" alt="Profile">
     </div>
 
     <!-- posts header -->
-    <div class="row my-5 mx-auto">
-      <div class="col">
-      <div class="text-center">
-        <h3>
-          {{user['first_name'] | title}} {{user['last_name'] | title}} ({{user['username']}})</h3>
+    <div class="row my-2 mx-auto justify-content-center">
 
-      </div>
-    </div>
-      <div class="col">
-        <div>{{user['biography']}}</div>
-        {%if user['id']==session['uid'] %}
-        <div><a class="btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}">Edit User</a></div>
-        {%endif%}
-      </div>
+      <h3> {{user['first_name'] | title}} {{user['last_name'] | title}} ({{user['username']}}) </h3>
+
+      {%if user['id']==session['uid'] %}
+      <div><a class="btn btn-success" href="{{url_for('user.edit_user',id=session['uid'])}}"> <i class="far fa-edit"></i></a></div>
+      {%endif%}
+
     </div>
 
-    <div class="row md-3">
+    {%if user['biography']%}
+    <div class="row my-2 mx-auto justify-content-center">
+      <h5>({{user['biography']}})</h5>
+    </div>
+    {%endif%}
+
       
-
     </div>
+  </div>
 
-    <div class="row">
+<hr>
+  <div class="row my-5 mx-auto justify-content-center">
 
-      {% for post in posts %}
-      <div class="col-lg-4 col-md-6 col-sm-12">
+    {% for post in posts %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
 
-        <!-- post card -->
-        <div class="card bg-light mb-3">
+      <!-- post card -->
+      <div class="card bg-light mb-3">
 
-          <!-- card header -->
-          <div class="card-header">
-            <h5 class="card-title">{{ post['title'] }}</h5>
+        <!-- card header -->
+        <div class="card-header row">
+          <div class="col-9">
+          <h5 class="card-title">{{ post['title'] }}</h5>
           </div>
 
-          <!-- card body -->
-          <div class="card-body">
-            <p class="card-text">{{ post['body'] }}</p>
-            <p class="card-text">{{ post['created'] }}</p>
-
-            <a href="#" class="card-link">Read more</a>
-            <a href="#" class="card-link">Author's Posts</a>
+          <div class="col">
+            <a href="{{url_for('blog.delete_post', post_id=post['id'])}}" class="card-link"><i class="fas fa-trash-alt"></i></a>
+            <a href="#" class="card-link"><i class="far fa-edit"></i></a>
           </div>
 
         </div>
+
+        <!-- card body -->
+        <div class="card-body">
+          <p class="card-text">{{ post['body'] }}</p>
+          <p class="card-text">{{ post['created'] }}</p>
+
+          <a href="#" class="card-link">Read more</a>
+          
+        </div>
+
       </div>
-
-      {%endfor%}
     </div>
-  </div>
 
-  <div class="col-3">
-
+    {%endfor%}
   </div>
+</div>
+
+
 </div>
 {%endblock%}

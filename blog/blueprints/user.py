@@ -75,7 +75,7 @@ def edit_user(id):
         
         try:
             # update user information
-            db.execute(f"""UPDATE user SET first_name = '{first_name}', last_name ='{last_name}',biography = '{biography}' WHERE id = '{session['uid']}'   """)
+            db.execute(f"""UPDATE user SET first_name = '{first_name}', last_name ='{last_name}', picture_url ='{picture_url}', biography = '{biography}' WHERE id = '{session['uid']}'   """)
             db.commit()
             
             # update session

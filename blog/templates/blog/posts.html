@@ -5,19 +5,21 @@
 <!-- content block -->
 {% block main %}
 
+{%if posts%}
 <!-- posts header -->
 <div class="row my-5 justify-content-between px-5">
-    <h3>
+  <h3>
     Recent Posts
-    </h3>
+  </h3>
   {%if session['uid'] %}
-    <a class="btn btn-primary text-white">Add Post</a>
+  <a href="{{url_for('blog.add_post')}}" class="btn btn-primary text-white">Add Post</a>
   {%endif%}
 </div>
 
 <div class="row">
 
   {% for post in posts %}
+
   <div class="col-lg-4 col-md-6 col-sm-12">
 
     <!-- post card -->
@@ -25,8 +27,27 @@
 
       <!-- card header -->
       <div class="card-header">
-        <h5 class="card-title">{{ post['title'] }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}"> {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
+        <div class="row">
+          <div class="col-8">
+            <h5 class="card-title">{{ post['title'] }}</h5>
+          </div>
+          <div class="col">
+            {%if session['uid']%}
+            {%if post['author_id'] == session['uid'] %}
+            <a href="{{url_for('blog.delete_post', post_id=post['id'])}}" class="card-link"><i
+                class="fas fa-trash-alt"></i></a>
+            <a href="{{url_for('blog.edit_post', id=post['id'])}}" class="card-link"><i class="far fa-edit"></i></a>
+
+            {%else%}
+
+            <a href="#" class="card-link"> report post</a>
+            {%endif%}
+            {%endif%}
+          </div>
+        </div>
+
+        <h6 class="card-subtitle mb-2 text-muted"> by <a href="{{url_for('user.view_user',id=post['author_id'])}}">
+            {{post['first_name'] | title}} {{post['last_name'] | title}}</a></h6>
       </div>
 
       <!-- card body -->
@@ -35,16 +56,17 @@
         <p class="card-text">{{ post['created'] }}</p>
 
         <a href="#" class="card-link">Read more</a>
-        <a href="#" class="card-link">More by this author</a>
+        <a href="#" class="card-link">More by this author </a>
+
+
       </div>
-        <!-- <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">
-            on 
-        </div>
-      <p class="body"></p> -->
-      </div>
+
+    </div>
   </div>
-{%endfor%}
+  {%endfor%}
+
+  {%else%}
+  <h3>There are no posts</h3>
+  {%endif%}
 </div>
 {% endblock %}

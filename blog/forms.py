@@ -19,6 +19,10 @@ class EditUserForm(FlaskForm):
     biography = TextAreaField("Enter your biography")
     submit=SubmitField("Update User")
 
+class EditPostForm(FlaskForm):
+    body=TextAreaField("Post body")
+    submit=SubmitField("Update Post")
+
 class AddUserForm(FlaskForm):
     username=StringField("Enter your username")
     password= PasswordField('New Password', [InputRequired(), EqualTo('confirm_password', message='Passwords must match')])
