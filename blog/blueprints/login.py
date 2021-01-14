@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template,request ,redirect,session
 from blog.forms import LoginForm
+from blog.models import User
+
 
 # define our blueprint
 login_bp = Blueprint('login', __name__)
@@ -17,33 +19,29 @@ def login():
         password = login_form.password.data
 
         # get the DB connection
-        db = get_db()
 
         # authenticate the user
 
-        try:
-            # fetch user if the username exists in the DB
-            user= db.execute('SELECT * FROM user WHERE username LIKE ?',(username,)).fetchone()
-
+        
+        # fetch user if the username exists in the DB
+        user=User.objects(username=username).first()
+        print(str(user.id))
             # check if the user was found and the password matches
-            if (user) and (user['password'] == password):
-                session['uid'] = user['id']
-                session['username']=user['username']
-                session['first_name'] = user['first_name']
-                session['last_name'] = user['last_name']
-                session['biography'] = user['biography']
+        if (user.username==username) and (user.password==password):
+            session['uid'] = str(user.id)
+            session['username']=user.username
+            session['first_name'] =user.first_name
+            session['last_name'] =user.last_name
+            session['biography'] =user.biography
+
+        
                 
 
-                # redirect the user after login
-                return redirect("/posts")
-            else:
-                # redirect to 404 if the login was invalid
-                return redirect("/404")
-
-        except sqlite3.Error as er:
-            print('SQLite error: %s' % (' '.join(er.args)))
+            # redirect the user after login
+            return redirect("/posts")
+        else:
+            # redirect to 404 if the login was invalid
             return redirect("/404")
-
     # redner the login template
     return render_template("login/login.html", form = login_form)
 
