@@ -25,7 +25,7 @@ def login():
         
         # fetch user if the username exists in the DB
         user=User.objects(username=username).first()
-        print(str(user.id))
+        # print(str(user.id))
             # check if the user was found and the password matches
         if (user.username==username) and (user.password==password):
             session['uid'] = str(user.id)
