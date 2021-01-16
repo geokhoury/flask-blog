@@ -19,6 +19,7 @@
   <div class="col-lg-4">
     <a class="btn btn-success" href="{{url_for('post.edit_post', post_id = post.id)}}">Edit Post</a>
     <a class="btn btn-danger" href="{{url_for('post.delete_post', post_id = post.id)}}">Delete Post</a>
+    <a class="btn btn-danger" href="{{url_for('post.add_comment', post_id = post.id)}}">Add comment</a>
   </div>
 </div>
 <div class="row my-5">
@@ -27,6 +28,17 @@
       {% for tag in post.tags%}
       <li>
         <span class="badge bg-primary">{{tag}}</span>
+      </li>
+      {%endfor%}
+    </ul>
+  </div>
+</div>
+<div class="row my-5">
+  <div class="col-lg-8">
+    <ul>
+      {% for comment in post.comments%}
+      <li>
+        <span class="badge bg-primary">{{comment.content}}</span>
       </li>
       {%endfor%}
     </ul>

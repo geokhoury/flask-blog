@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, flash, url_for
-
+from flask_pymongo import PyMongo 
 from blog.models import User
 # from blog.models import TextUser
 from blog.forms import EditUserForm, AddUserForm
@@ -29,13 +29,16 @@ def add_user():
 
         # save the user object
         user.save()
+        return redirect(url_for('post.index'))
+    else:
+        return render_template("user/add-user.html", form=add_user_form)
 
         # # another way
         # my_user = User(username = 'cookie', password = '1234')
         # my_user.save()
 
     # render the template
-    return render_template("user/add-user.html", form=add_user_form)
+   
 
 
 @user_bp.route('/user/edit/<id>', methods=['GET', 'POST'])
@@ -92,3 +95,14 @@ def view_user(id):
     user = User.objects(id=id).first()
     # render 'profile.html' blueprint with user
     return render_template('user/view-user.html', user=user)
+
+
+@user_bp.route('/user/delete/<id>')
+def delete_user(id):
+
+    # get user by id
+    User.objects(id=id).first().delete()
+    session.clear()
+
+    # render 'profile.html' blueprint with user
+    return redirect(url_for('login.logout'))

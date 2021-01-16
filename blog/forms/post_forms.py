@@ -13,3 +13,9 @@ class EditPostForm(FlaskForm):
     title = StringField("Enter a title")
     content = TextAreaField("Enter your content")
     submit = SubmitField("Edit post")
+
+
+class AddCommentForm(FlaskForm):
+    title = StringField("Enter a title")
+    body = TextAreaField("Enter your text")
+    submit = SubmitField("Add comment")

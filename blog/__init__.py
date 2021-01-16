@@ -33,13 +33,16 @@ def create_app(test_config=None):
 
     @app.route('/test-db')
     def test_db():
-        bert = User(email='bert@sesame.com', first_name='Bert',
+        bert = User(username='bert',password='1234', first_name='Bert',
                     last_name='Sesame').save()
 
-        cookie = User(email='cookie@monster.com', first_name='Cookie',
+        cookie = User(username='cookie@monster.com',password='258', first_name='Cookie',
                     last_name='Monster').save()
+        c1 = Comment(content='test comment 1',author=bert)
+        c2 = Comment(content='test comment 2',author=cookie)
+
         # Create TextPost
-        post1 = TextPost(title='Fun with MongoEngine', author=cookie)
+        post1 = TextPost(title='Fun with MongoEngine', author=bert,comments= [c1,c2])
 
         post1.content = 'Took a look at MongoEngine today, looks pretty cool.'
         post1.tags = ['mongodb', 'mongoengine']
@@ -54,7 +57,7 @@ def create_app(test_config=None):
         # for post in Post.objects:
         #     print(post.title)
 
-        return TextPost.objects()
+        return 'data base'
 
     # register the 'post' blueprint
     from .blueprints.post import post_bp
