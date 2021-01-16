@@ -81,8 +81,10 @@ def edit_post(post_id):
     return render_template("post/edit-post.html", form=edit_post_form)
 
 
-@post_bp.route('/post/<post_id>')
+@post_bp.route('/post/<post_id>',methods=['POST','GET'])
 def view_post(post_id):
+    post = TextPost.objects(id=post_id).first()
+
     # create instance of our form
     add_comment_form = AddCommentForm()
 
@@ -97,18 +99,19 @@ def view_post(post_id):
 
         # create instance of TextPost
         comment = Comment(content=body,author=user)
-        post= TextPost(title=title,author=user,comments=[comment])
+
+        # add comment to post comments
+        post.comments.append(comment)
+        post.save()
         
-        post.comment.save()
-        return render_template('post/view-post.html', post=post)
-    else:  
-        post = TextPost.objects(id=post_id).first()
+        return render_template('post/view-post.html', post=post ,form=add_comment_form)
+        
 
     # get post
 
 
     # render the view
-    return render_template('post/view-post.html', post=post)
+    return render_template('post/view-post.html', post=post,form=add_comment_form)
 
 
 @post_bp.route('/post/delete/<post_id>')

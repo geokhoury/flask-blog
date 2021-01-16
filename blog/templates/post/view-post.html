@@ -19,8 +19,9 @@
   <div class="col-lg-4">
     <a class="btn btn-success" href="{{url_for('post.edit_post', post_id = post.id)}}">Edit Post</a>
     <a class="btn btn-danger" href="{{url_for('post.delete_post', post_id = post.id)}}">Delete Post</a>
-    <a class="btn btn-danger" href="{{url_for('post.add_comment', post_id = post.id)}}">Add comment</a>
+    
   </div>
+
 </div>
 <div class="row my-5">
   <div class="col-lg-8">
@@ -34,6 +35,20 @@
   </div>
 </div>
 <div class="row my-5">
+  <form method="POST" action="">
+    {{form.hidden_tag()}}
+    <div class="row">
+     {{form.title.label}}
+     {{form.title()}}
+      </div>
+      <div class="row">
+        {{form.body.label}}
+        {{form.body()}}
+         </div>
+      
+    <hr class="mb-4" />
+    {{form.submit()}}
+  </form>
   <div class="col-lg-8">
     <ul>
       {% for comment in post.comments%}
