@@ -38,6 +38,7 @@ def add_post():
         # create instance of TextPost
         post = TextPost(title=title, content=content)
         post.tags = ["flask", "python", "mongo"]
+        post.author =  User.get_by_username(User,session['username'])
         post.save()
 
         # render the template
@@ -84,27 +85,21 @@ def edit_post(post_id):
 @post_bp.route('/post/<post_id>',methods=['POST','GET'])
 def view_post(post_id):
     post = TextPost.objects(id=post_id).first()
-
     # create instance of our form
     add_comment_form = AddCommentForm()
-
     # handle form submission
     if add_comment_form.validate_on_submit():
-
         # read post values from the form
         title = add_comment_form.title.data
         body = add_comment_form.body.data
         user = User.objects(id=session['uid']).first()
-    
-
         # create instance of TextPost
         comment = Comment(content=body,author=user)
-
         # add comment to post comments
         post.comments.append(comment)
         post.save()
         
-        return render_template('post/view-post.html', post=post ,form=add_comment_form)
+        return render_template('post/view.html', post=post ,form=add_comment_form)
         
 
     # get post

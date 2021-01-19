@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, session, flash, url_for
-from flask_pymongo import PyMongo 
 from blog.models import User
 # from blog.models import TextUser
 from blog.forms import EditUserForm, AddUserForm
@@ -10,28 +9,24 @@ user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/add/user', methods=['GET', 'POST'])
 def add_user():
-
     # create instance of our form
     add_user_form = AddUserForm()
-
     # handle form submission
     if add_user_form.validate_on_submit():
-
         # create user object
         user = User()
-
         # set object attributes
         user.username = add_user_form.username.data
         user.password = add_user_form.password.data
         user.first_name = add_user_form.first_name.data
         user.last_name = add_user_form.last_name.data
         user.biography = add_user_form.biography.data
-
         # save the user object
         user.save()
         return redirect(url_for('post.index'))
     else:
-        return render_template("user/add-user.html", form=add_user_form)
+        print("we here")
+        return render_template("user/add-user.html", form=add_user_form,message= "here")
 
         # # another way
         # my_user = User(username = 'cookie', password = '1234')

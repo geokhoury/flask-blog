@@ -11,4 +11,9 @@ class User(Document):
     first_name = StringField(max_length=50)
     last_name = StringField(max_length=50)
     biography = StringField(max_length=50)
+
+    def get_by_username(cls, username):
+        data = User.objects.get(username= username)
+        if data is not None:
+            return data
     

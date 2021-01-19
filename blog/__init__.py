@@ -18,9 +18,6 @@ def create_app(test_config=None):
     # connect to MongoDB using mongoengine
     connect(
         db='blog',
-        username='root',
-        password='example',
-        authentication_source='admin'
     )
 
     # define our collections

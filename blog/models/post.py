@@ -5,7 +5,6 @@ from .user import User
 class Post(Document):
     # define class metadata
     meta = {'collection': 'posts', 'allow_inheritance': True}
-
     # define class fields
     title = StringField(max_length=120, required=True)
     author = ReferenceField(User,reverse_delete_rule=CASCADE)

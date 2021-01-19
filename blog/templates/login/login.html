@@ -11,18 +11,25 @@
   {{message}}
 </div>
 {% endif %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-    {{form.username.label}}
-    {{form.username()}}
+<div class="row">
+  <div class="col-md-4 mx-auto my-5" style="height:500px;">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+        <div class="form-group">
+          {{form.username.label(class="col-form-label")}}
+          {{form.username(class="form-control")}}
+          <small id="" class="text-muted">Please Enter you Username</small>
+        </div>
+     
+        <div class="form-group">
+        {{form.password.label(class="col-form-label")}}
+        {{form.password(class="form-control")}}
+        <small id="" class="text-muted">Please Enter Password</small>
+      </div>
+    
+      <hr class="mb-4" />
+      {{form.submit(class="btn btn-outline-primary btn-lg")}}
+    </form>
   </div>
-  <div class="row">
-    {{form.password.label}}
-    {{form.password()}}
-  </div>
-
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
+</div>
 {% endblock %}
