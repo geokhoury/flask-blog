@@ -1,6 +1,7 @@
 from mongoengine import *
 from .comment import Comment
 from .user import User
+from datetime import datetime
 
 class Post(Document):
     # define class metadata
@@ -11,11 +12,19 @@ class Post(Document):
     author = ReferenceField(User)
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
-
+    created_at = DateTimeField(default=datetime.now())
+    published = BooleanField(default = False)
 
 class TextPost(Post):
     content = StringField()
 
+    @queryset_manager
+    def get_published_posts(self, doc_cls, queryset):
+        return queryset.filter(published = True)
+
+    @queryset_manager
+    def get_recent_posts(self, doc_cls, queryset):
+        return queryset.order_by("-created_at")
 
 class ImagePost(Post):
     image_path = StringField()
