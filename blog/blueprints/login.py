@@ -25,8 +25,8 @@ def login():
         if (user) and (user.authenticate(username, password)):
             session['user'] = user.serialize()
             # redirect the user after login
-            print(">>",request.args['next'])
-            return redirect(request.args['next'])
+            # print(">>",request.args['next'])
+            return redirect(url_for('post.index'))
         else:
             # invalid credentials, redirect to login with error message
             flash("Login invalid. Please check your username and password.")
