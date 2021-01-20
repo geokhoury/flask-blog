@@ -41,7 +41,7 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, world!'
-
+    @app.route('/db')
     @app.route('/dummy/init-db')
     def test_db():
         bert = User(username='bert', password='1234', first_name='Bert',

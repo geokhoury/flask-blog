@@ -41,6 +41,14 @@
         <hr>
         <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i class="fas fa-book-reader"></i> Read More</a>
         <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i class="fas fa-feather-alt"></i> More by this author</a>
+        {%if not post.published%}
+        <a href="{{url_for('post.publish', post_id = post.id)}}" class="card-link text-dark"> <i class="fas fa-feather-alt"></i> Publish </a>
+        {%endif%}
+        {%if post.published%}
+        <a href="{{url_for('post.publish', post_id = post.id)}}" class="card-link text-dark"> <i class="fas fa-feather-alt"></i> Draft </a>
+        {%endif%}
+
+
       </div>
     </div>
   </div>

@@ -51,40 +51,40 @@ def edit_user(id):
 
     # handle form submission
 
-    if edit_user_form.validate_on_submit():
+    # if edit_user_form.validate_on_submit():
 
-        # read post values from the form
-        first_name = edit_user_form.first_name.data
-        last_name = edit_user_form.last_name.data
-        biography = edit_user_form.biography.data
+    #     # read post values from the form
+    #     first_name = edit_user_form.first_name.data
+    #     last_name = edit_user_form.last_name.data
+    #     biography = edit_user_form.biography.data
 
-        print(first_name, last_name)
-        # get the DB connection
-        db = get_db()
+    #     print(first_name, last_name)
+    #     # get the DB connection
+    #     # db = get_db()
 
-        try:
-            # update user information
-            db.execute(
-                f"""UPDATE user SET first_name = '{first_name}', last_name ='{last_name}',biography = '{biography}' WHERE id = '{session['uid']}'   """)
-            db.commit()
+    #     try:
+    #         # update user information
+    #         db.execute(
+    #             f"""UPDATE user SET first_name = '{first_name}', last_name ='{last_name}',biography = '{biography}' WHERE id = '{session['uid']}'   """)
+    #         db.commit()
 
-            # update session
-            session['first_name'] = first_name
-            session['last_name'] = last_name
-            session['biography'] = biography
+    #         # update session
+    #         session['first_name'] = first_name
+    #         session['last_name'] = last_name
+    #         session['biography'] = biography
 
-            #  flash masseag
-            flash("User information updated successfully!")
+    #         #  flash masseag
+    #         flash("User information updated successfully!")
 
-            # redirect
-            return redirect(url_for('user.view_user', id=session['uid']))
+    #         # redirect
+    #         return redirect(url_for('user.view_user', id=session['uid']))
 
-        except sqlite3.Error as er:
-            print('SQLite error: %s' % (' '.join(er.args)))
-            return redirect("/404")
+    #     except sqlite3.Error as er:
+    #         print('SQLite error: %s' % (' '.join(er.args)))
+    #         return redirect("/404")
 
-    # redner the login template
-    return render_template("user/edit-user.html", form=edit_user_form)
+    # # redner the login template
+    # return render_template("user/edit-user.html", form=edit_user_form)
 
 
 @user_bp.route('/users')

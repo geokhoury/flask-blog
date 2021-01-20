@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
-import datetime
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash
+from datetime import datetime
 
 from blog.models import TextPost
-from blog.forms import AddPostForm, EditPostForm
+from blog.forms import AddPostForm, EditPostForm, DraftPostForm
 
 # define our blueprint
 post_bp = Blueprint('post', __name__)
@@ -12,10 +12,49 @@ post_bp = Blueprint('post', __name__)
 @post_bp.route('/new')
 def index():
     # get all posts
-    posts = TextPost.objects
+    posts = TextPost.objects(published=True)
 
     # render 'blog' blueprint with posts
-    return render_template('post/posts.html', posts=posts, title = 'New Posts')
+    return render_template('post/posts.html', posts=posts, title='New Posts')
+
+@post_bp.route('/post/<post_id>/publish')
+def publish(post_id):
+    if(TextPost.objects(id=post_id,published=True)):
+        TextPost.objects(id=post_id).update_one(set__published=False,set__published_at=None)
+        flash("Your post has been successfully changed to draft.")
+    
+        return redirect(url_for('post.post_draft'))
+    else:
+        TextPost.objects(id=post_id).update_one(set__published=True,set__published_at=datetime.now())
+        flash("Your post has been successfully changed to publish.")
+    
+        return redirect(url_for('post.post_published'))
+    # post_publish=TextPost.objects(id=post_id).first()
+    # post_publish.published=True
+    # post_publish.published_at=datetime.now()
+    # post_publish.save()
+    # flash("Your post has been successfully changed to publish.")
+    
+    # return redirect(url_for('post.post_published'))
+
+
+@post_bp.route('/post/drafts')
+def post_draft():
+    # get draft posts
+    draft_posts = TextPost.objects(published=False,author=session['user']['id'])
+
+    # render 'blog' blueprint with posts
+    return render_template('post/posts.html', posts=draft_posts, title='Draft Posts')
+
+
+@post_bp.route('/post/published')
+def post_published():
+    # get published posts
+    published_posts = TextPost.objects(published=True,author=session['user']['id'])
+
+    # render 'blog' blueprint with posts
+    return render_template('post/posts.html', posts=published_posts, title='published Posts')
+
 
 @post_bp.route('/trending')
 def trending():
@@ -23,8 +62,7 @@ def trending():
     posts = TextPost.objects
 
     # render 'blog' blueprint with posts
-    return render_template('post/posts.html', posts=posts, title = 'Trending Posts')
-
+    return render_template('post/posts.html', posts=posts, title='Trending Posts')
 
 
 @post_bp.route('/post/add', methods=['GET', 'POST'])
@@ -33,7 +71,6 @@ def add_post():
     # create instance of our form
     add_post_form = AddPostForm()
 
-    # handle form submission
     if add_post_form.validate_on_submit():
 
         # read post values from the form
@@ -41,8 +78,10 @@ def add_post():
         content = add_post_form.body.data
 
         # create instance of TextPost
-        post = TextPost(title=title, content=content)
+        post = TextPost(title=title, content=content,author=session['user']['id'])
         post.tags = ["flask", "python", "mongo"]
+        if add_post_form.submit.data:
+            post.publish()
         post.save()
 
         # render the template

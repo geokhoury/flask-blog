@@ -14,6 +14,7 @@ class Post(Document):
     comments = ListField(EmbeddedDocumentField(Comment))
     created_at = DateTimeField(default=datetime.now())
     published = BooleanField(default = False)
+    published_at=DateField(default=None)
 
 class TextPost(Post):
     content = StringField()
@@ -25,6 +26,12 @@ class TextPost(Post):
     @queryset_manager
     def get_recent_posts(self, doc_cls, queryset):
         return queryset.order_by("-created_at")
+    
+    # def publish(self):
+    #     self.published=True
+    #     self.published_at=datetime.now()
+
+
 
 class ImagePost(Post):
     image_path = StringField()
