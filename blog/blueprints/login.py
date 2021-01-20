@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template,request ,redirect,session
+from flask import Blueprint, render_template, request, redirect, session, flash, url_for
 from blog.forms import LoginForm
+from blog.models import User
 
 # define our blueprint
 login_bp = Blueprint('login', __name__)
 
-@login_bp.route('/login', methods =['POST','GET'])
+
+@login_bp.route('/login', methods=['POST', 'GET'])
 def login():
     # create instance of our form
     login_form = LoginForm()
@@ -16,45 +18,33 @@ def login():
         username = login_form.username.data
         password = login_form.password.data
 
-        # get the DB connection
-        db = get_db()
+        # get the user object
+        user = User.objects(username=username).first()
 
-        # authenticate the user
+        # check if the user was found and the password matches
+        if (user) and (user.authenticate(username, password)):
+            session['user'] = user.serialize()
+            # redirect the user after login
+            print(">>",request.args['next'])
+            return redirect(request.args['next'])
+        else:
+            # invalid credentials, redirect to login with error message
+            flash("Login invalid. Please check your username and password.")
+            return redirect(url_for('login.login'))
 
-        try:
-            # fetch user if the username exists in the DB
-            user= db.execute('SELECT * FROM user WHERE username LIKE ?',(username,)).fetchone()
+    # render the login template
+    return render_template("login/login.html", form=login_form)
 
-            # check if the user was found and the password matches
-            if (user) and (user['password'] == password):
-                session['uid'] = user['id']
-                session['username']=user['username']
-                session['first_name'] = user['first_name']
-                session['last_name'] = user['last_name']
-                session['biography'] = user['biography']
-                
-
-                # redirect the user after login
-                return redirect("/posts")
-            else:
-                # redirect to 404 if the login was invalid
-                return redirect("/404")
-
-        except sqlite3.Error as er:
-            print('SQLite error: %s' % (' '.join(er.args)))
-            return redirect("/404")
-
-    # redner the login template
-    return render_template("login/login.html", form = login_form)
 
 @login_bp.route('/session')
 def show_session():
     return dict(session)
 
+
 @login_bp.route('/logout')
 def logout():
-    # pop 'uid' from session
+    # clear user session
     session.clear()
 
     # redirect to index
-    return redirect("/")
+    return redirect(url_for('post.index'))

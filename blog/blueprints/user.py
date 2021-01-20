@@ -1,13 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, session, flash, url_for
 
 from blog.models import User
-from blog.forms import EditUserForm, AddUserForm
+from blog.forms import EditUserForm, AddUserForm, ChangePasswordForm
+from blog import login_required
 
 # define our blueprint
 user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/add/user', methods=['GET', 'POST'])
+@login_required
 def add_user():
 
     # create instance of our form
@@ -37,7 +39,7 @@ def add_user():
     return render_template("user/add-user.html", form=add_user_form)
 
 
-@user_bp.route('/user/edit/<int:id>', methods=['GET', 'POST'])
+@user_bp.route('/user/edit/<id>', methods=['GET', 'POST'])
 def edit_user(id):
 
     # create instance of our form
@@ -90,18 +92,38 @@ def get_users():
 
     # get all users
     users = User.objects
+    
+    # render 'user/list.html' blueprint with users
+    return render_template('user/users.html', users=users)
 
-    # render 'list.html' blueprint with users
-    return render_template('user/list.html', users=users)
 
+@user_bp.route('/user/view/<user_id>')
+def view_user(user_id):
+    # get the user object
+    user = User.objects(id = user_id).first()
 
-@user_bp.route('/user/view/<int:id>')
-def view_user(id):
-    # get the DB connection
-    db = get_db()
+    if user:
+        # render 'user/view-user.html' with the user
+        return render_template('user/view-user.html', user=user)
+    else:
+        return redirect('/404')
 
-    # get user by id
-    user = db.execute(f'''select * from user  WHERE id = {id}''').fetchone()
+@user_bp.route('/user/change_password', methods=['GET', 'POST'])
+def change_password():
+    user = User.objects(id = session['user']['id']).first()
+    
+    change_password_form = ChangePasswordForm()
 
-    # render 'profile.html' blueprint with user
-    return render_template('user/view-user.html', user=user)
+    if change_password_form.validate_on_submit():
+
+        # read post values from the form
+        current_password = change_password_form.current_password.data
+        new_password = change_password_form.new_password.data
+
+        if (user):
+            user.change_password(current_password, new_password)
+            user.save()
+            flash("Your password has been successfully changed.")
+            return redirect(url_for('user.change_password'))
+
+    return render_template("user/change-password.html", form = change_password_form)

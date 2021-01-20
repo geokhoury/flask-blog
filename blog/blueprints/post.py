@@ -9,13 +9,22 @@ post_bp = Blueprint('post', __name__)
 
 
 @post_bp.route('/')
-@post_bp.route('/posts')
+@post_bp.route('/new')
 def index():
     # get all posts
     posts = TextPost.objects
 
     # render 'blog' blueprint with posts
-    return render_template('post/posts.html', posts=posts)
+    return render_template('post/posts.html', posts=posts, title = 'New Posts')
+
+@post_bp.route('/trending')
+def trending():
+    # get all posts
+    posts = TextPost.objects
+
+    # render 'blog' blueprint with posts
+    return render_template('post/posts.html', posts=posts, title = 'Trending Posts')
+
 
 
 @post_bp.route('/post/add', methods=['GET', 'POST'])
