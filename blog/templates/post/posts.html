@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
 <!-- title -->
-{% block title %}Flask Blog - Posts{% endblock %}
+{% block title %}{{title}}{% endblock %}
 
 
 <!-- content block -->
 {% block main %}
 
 <!-- posts header -->
-<div class="row my-5">
-  <div class="col-lg-8">
-    <h3>
-      Posts
-    </h3>
+<div class="row my-5 justify-content-between">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1>
+      <i class="fas fa-asterisk"></i> {{title}}
+    </h1>
   </div>
-  <div class="col-lg-4">
-    <a class="btn btn-success" href="{{url_for('post.add_post')}}">Add Post</a>
+  {% if session['user'] %}
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <a class="btn btn-dark" href="{{url_for('post.add_post')}}"> <i class="fas fa-feather-alt"></i> Add Post</a>
   </div>
+  {% endif %}
 </div>
 
 <div class="row">
@@ -28,17 +30,17 @@
 
       <!-- card header -->
       <div class="card-header">
-        <h5 class="card-title">{{ post['title'] }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted"> by {{ post['first_name'] | title}} {{post['last_name'] | title}}</h6>
+        <h5 class="card-title"><a class="text-dark" href="{{url_for('post.view_post', post_id = post.id)}}">{{ post['title'] }}</a></h5>
+        <h6 class="card-subtitle">by <a class="text-muted" href="{{url_for('user.view_user', user_id = post.author.id)}}">{{
+          post.author.first_name | title}} {{post.author.last_name | title}}</a></h6>
       </div>
 
       <!-- card body -->
       <div class="card-body">
-        <p class="card-text">{{ post['content'] }}</p>
-        <p class="card-text">{{ post['created'] }}</p>
-
-        <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link">View Post</a>
-        <a href="#" class="card-link">More by this author</a>
+        <p class="card-text text-dark">{{ post['content'] |truncate(200,false,'...') }}</p>
+        <hr>
+        <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i class="fas fa-book-reader"></i> Read More</a>
+        <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i class="fas fa-feather-alt"></i> More by this author</a>
       </div>
     </div>
   </div>

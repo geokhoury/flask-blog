@@ -7,18 +7,30 @@
 
 <!-- content block -->
 {% block main %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-   {{form.title.label}}
-   {{form.title()}}
-    </div>
-    <div class="row">
-      {{form.body.label}}
-      {{form.body()}}
-       </div>
-    
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1>
+      Add Post
+    </h1>
+  </div>
+</div>
+
+<div class="row my-5 mx-auto">
+  <div class="col-lg-10 col-md-6 col-sm-12">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+      <div class="row my-3">
+        {{form.title.label}}
+        {{form.title(class_="form-control")}}
+      </div>
+      <div class="row my-3">
+        {{form.body.label}}
+        {{form.body(class_="form-control")}}
+      </div>
+      <hr class="mb-4" />
+      {{form.submit(class_="form-control btn btn-dark")}}
+    </form>
+
+  </div>
+</div>
 {% endblock %}

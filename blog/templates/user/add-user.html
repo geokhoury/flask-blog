@@ -1,54 +1,68 @@
 {% extends 'base.html' %}
-<!-- title -->
-{% block title %}Flask Blog - Add User{% endblock %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Sign Up{% endblock %}</h1>
+{% endblock %}
 
 <!-- content block -->
 {% block main %}
-
-<!-- Add user -->
 <div class="row my-5">
-  <div class="col-lg-8">
-    <h3>
-    Add User
-    </h3>
+  <div class="container col-lg-8 col-md-6 col-sm-12">
+    <h1>
+      Sign Up
+    </h1>
+  </div>
+  <div class="container col-lg-8 col-md-6 col-sm-12 my-3">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      The following fields encountered some validation errors.
+      <ul>
+        {% for field, error in form.errors.items() %}
+        <li>
+          <strong>{{ field }}</strong> - {{ ', '.join(error) }}
+        </li>
+        {% endfor %}
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-lg-8">
-    
-  <form method="POST">
-    {{form.hidden_tag()}}
+<div class="row my-5 mx-auto">
+  <div class="container col-lg-8 col-md-6 col-sm-12">
+    <form method="POST">
+      {{form.hidden_tag()}}
 
-    <div class="mb-3">
-      {{form.username.label}}
-      {{form.username(class_="form-control")}}
-    </div>
-    <div class="mb-3">
-      {{form.password.label}}
-    {{form.password(class_="form-control")}}
-    </div>
-    <div class="mb-3">
-      {{form.confirm_password.label}}
-    {{form.confirm_password(class_="form-control")}}
-    </div>
-    <div class="mb-3">
-      {{form.first_name.label}}
-      {{form.first_name(class_="form-control")}}
-    </div>
-    <div class="mb-3">
-      {{form.last_name.label}}
-    {{form.last_name(class_="form-control")}}
-    </div>
-    <div class="mb-3">
-      {{form.biography.label}}
-      {{form.biography(class_="form-control")}}
-    </div>
-    <div class="my-3">
-    {{form.submit(class_="btn btn-success")}}
+      <div class="mb-3">
+        {{form.username.label}}
+        {{form.username(class_="form-control")}}
+      </div>
+      <div class="mb-3">
+        {{form.password.label}}
+        {{form.password(class_="form-control")}}
+      </div>
+      <div class="mb-3">
+        {{form.confirm_password.label}}
+        {{form.confirm_password(class_="form-control")}}
+      </div>
+      <div class="mb-3">
+        {{form.first_name.label}}
+        {{form.first_name(class_="form-control")}}
+      </div>
+      <div class="mb-3">
+        {{form.last_name.label}}
+        {{form.last_name(class_="form-control")}}
+      </div>
+      <div class="mb-3">
+        {{form.biography.label}}
+        {{form.biography(class_="form-control")}}
+      </div>
+      <div class="my-3">
+        {{form.submit(class_="btn btn-dark")}}
+      </div>
+
+    </form>
+
   </div>
-
-  </form>
-</div>
 </div>
 {% endblock %}

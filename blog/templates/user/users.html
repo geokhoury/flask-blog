@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Users{% endblock %}</h1>
+{% endblock %}
+
+<!-- main block -->
+{% block main %}
+<!-- posts header -->
+<div class="row my-5">
+  <div class="col-lg-4 mx-auto">
+    <h2>
+      Users
+    </h2>
+  </div>
+  <div class="col-lg-4">
+    <a class="btn btn-success" href="{{url_for('user.add_user')}}">Add User</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-10 mx-auto">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Username</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{user.username}}</td>
+          <td>{{user.first_name}}</td>
+          <td>{{user.last_name}}</td>
+          <td>Actions</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -6,23 +6,32 @@
 {% endblock %}
 
 <!-- content block -->
-{% block main %} {% if message %}
-<div>
-  {{message}}
+{% block main %}
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <h1>
+      Login
+    </h1>
+  </div>
 </div>
-{% endif %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-    {{form.username.label}}
-    {{form.username()}}
-  </div>
-  <div class="row">
-    {{form.password.label}}
-    {{form.password()}}
-  </div>
 
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
+<div class="row my-5 mx-auto">
+  <div class="col-lg-4 col-md-6 col-sm-12">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+      <div class="row my-3">
+        {{form.username.label(class_="form-label", for_="username")}}
+        {{form.username(id_="username", class_="form-control")}}
+      </div>
+      <div class="row my-3">
+        {{form.password.label(class_="form-label", for_="password")}}
+        {{form.password(id_="username", class_="form-control")}}
+      </div>
+
+      <hr class="mb-4" />
+      {{form.submit(class_="form-control bg-dark text-light")}}
+    </form>
+
+  </div>
+</div>
 {% endblock %}

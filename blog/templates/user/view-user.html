@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Blog - Posts{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+<div class="row my-5">
+  <div class="col-lg-8">
+    <h3>
+      {{user.username}}
+    </h3>
+  </div>
+  <div class="col-lg-4">
+    {#<a class="btn btn-success" href="{{url_for('post.edit_post', post_id = post.id)}}">Edit Post</a>#}
+    {#<a class="btn btn-danger" href="{{url_for('post.delete_post', post_id = post.id)}}">Delete Post</a>#}
+  </div>
+</div>
+<div class="row my-5">
+  <div class="col-lg-8">
+  </div>
+</div>
+{% endblock %}
