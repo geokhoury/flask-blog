@@ -21,7 +21,7 @@
 <div class="row">
 
   {% for post in posts %}
-  <div class="col-lg-4 col-md-6 col-sm-12">
+  <div class="col-lg-3 col-md-6 col-sm-12">
 
     <!-- post card -->
     <div class="card bg-light mb-3">
@@ -34,7 +34,7 @@
 
       <!-- card body -->
       <div class="card-body">
-        <p class="card-text">{{ post['content'] }}</p>
+        <p class="card-text">{{ post['content']|truncate(100, True) }}</p>
         <p class="card-text">{{ post['created'] }}</p>
 
         <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link">View Post</a>

@@ -1,6 +1,8 @@
+from blog.models.post import Post
+from itertools import count
 from flask import Blueprint, render_template, request, session, redirect, url_for
 import datetime
-from blog.models import User
+from blog.models import User, comment
 from blog.models import Comment
 
 from blog.models import TextPost
@@ -33,8 +35,6 @@ def add_post():
         # read post values from the form
         title = add_post_form.title.data
         content = add_post_form.body.data
-    
-
         # create instance of TextPost
         post = TextPost(title=title, content=content)
         post.tags = ["flask", "python", "mongo"]
@@ -106,7 +106,7 @@ def view_post(post_id):
 
 
     # render the view
-    return render_template('post/view-post.html', post=post,form=add_comment_form)
+    return render_template('post/view.html', post=post,form=add_comment_form)
 
 
 @post_bp.route('/post/delete/<post_id>')
@@ -118,35 +118,26 @@ def delete_post(post_id):
     # render the view
     return redirect(url_for('post.index'))
 
-# @post_bp.route('/comment/add', methods=['GET', 'POST'])
-# def add_comment():
+@post_bp.route('/delete-comment/<post_id>/<content>')
+def delete_comment(post_id,content):
+    # get post
+    post = Post.objects(id=post_id).first()
+    #get a comment of post
+    post.comments
+    count=0
+    for i in post.comments:
+        if i.content == content:
+            post.comments.pop(count)
+            post.save()
+            break
+        count+=1    
+    # render the view
+    return redirect(url_for('post.index'))
 
-#     # create instance of our form
-#     add_comment_form = AddCommentForm()
 
-#     # handle form submission
-#     if add_comment_form.validate_on_submit():
-
-#         # read post values from the form
-#         title = add_comment_form.title.data
-#         body = add_comment_form.body.data
-#         user = User.objects(id=session['uid']).first()
-    
-
-#         # create instance of TextPost
-#         comment = Comment(content=body,author=user)
-#         post= TextPost(title=title,author=user,comments=[comment])
-        
-#         post.save()
-
-#         # render the template
-#         return redirect(url_for('post.index'))
-
-#     # render the template
-#     return render_template("post/add-comment.html", form=add_comment_form)
-
-# c1 = Comment(content='test comment 1',author=bert)
-#         c2 = Comment(content='test comment 2',author=cookie)
-
-#         # Create TextPost
-#         post1 = TextPost(title='Fun with MongoEngine', author=bert,comments= [c1,c2])
+@post_bp.route('/trending')
+def trending():
+    # get all posts
+    posts = TextPost.objects.order_by('-created_at')
+    # render 'blog' blueprint with posts
+    return render_template('post/posts.html', posts=posts, title='Trending Posts')

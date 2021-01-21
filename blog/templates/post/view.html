@@ -11,10 +11,7 @@
 <div class="row mt-5">
   <div class="col d-flex justify-content-between">
     <h1>{{post.title}}</h1>
-    <span>
-  <a class="btn btn-success" href="{{url_for('post.edit_post', post_id = post.id)}}">Edit Post</a>
-  <a class="btn btn-danger" href="{{url_for('post.delete_post', post_id = post.id)}}">Delete Post</a>
-</span>
+
   </div>
 </div>
 <div class="row">
@@ -45,6 +42,7 @@
         {% for comment in post.comments%}
         <article class="alert alert-info text-white">
           <p class="text-dark">{{comment.content}}</p>
+          <a class="btn btn-danger" href="{{url_for('post.delete_comment', post_id = post.id,content = comment.content)}}">Delete Post</a>
           </article>
        {%endfor%}
       </div>

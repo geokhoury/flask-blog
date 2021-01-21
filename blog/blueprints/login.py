@@ -10,19 +10,13 @@ login_bp = Blueprint('login', __name__)
 def login():
     # create instance of our form
     login_form = LoginForm()
-
     # handle form submission
     if login_form.validate_on_submit():
-
         # read post values from the form
         username = login_form.username.data
         password = login_form.password.data
-
         # get the DB connection
-
-        # authenticate the user
-
-        
+        # authenticate the user        
         # fetch user if the username exists in the DB
         user=User.objects(username=username).first()
         # print(str(user.id))
@@ -53,6 +47,5 @@ def show_session():
 def logout():
     # pop 'uid' from session
     session.clear()
-
     # redirect to index
     return redirect("/")

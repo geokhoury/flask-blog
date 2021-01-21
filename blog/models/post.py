@@ -1,6 +1,8 @@
 from mongoengine import *
+from mongoengine.fields import DateField
 from .comment import Comment
 from .user import User
+from datetime import datetime
 
 class Post(Document):
     # define class metadata
@@ -10,7 +12,7 @@ class Post(Document):
     author = ReferenceField(User,reverse_delete_rule=CASCADE)
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
-
+    created_at = DateTimeField(default=datetime.now())
 
 class TextPost(Post):
     content = StringField()

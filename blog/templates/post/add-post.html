@@ -14,10 +14,20 @@
 <div class="form-group">
   {{form.title.label(class="col-form-label")}}
   {{form.title(class="form-control")}}
+  {% for  error in form.errors.title %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
 </div>
 <div class="form-group">
   {{form.body.label(class="col-form-label")}}
-  {{form.body(class="form-control")}}
+  {{form.body(class="form-control",rows="10")}}
+  {% for  error in form.errors.body %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
 </div>
 <div class="form-group">
   {{form.submit(class="btn btn-outline-success")}}
