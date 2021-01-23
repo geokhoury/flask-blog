@@ -8,18 +8,19 @@
 
 <!-- posts header -->
 <div class="row my-5 justify-content-between">
-  <div class="col-lg-4 col-md-6 col-sm-12">
+  <div class="col-lg-4 col-md-6 col-sm-12 align-self-center">
     <h1>
-      <i class="fas fa-asterisk"></i> {{title}}
+      <i class="{{icon}}"></i> {{title}}
     </h1>
   </div>
   {% if session['user'] %}
-  <div class="col-lg-4 col-md-6 col-sm-12">
+  <div class="col-lg-4 col-md-6 col-sm-12 align-self-center">
     <a class="btn btn-dark" href="{{url_for('post.add_post')}}"> <i class="fas fa-feather-alt"></i> Add Post</a>
   </div>
   {% endif %}
 </div>
 
+{% if posts %}
 <div class="row">
 
   {% for post in posts %}
@@ -30,20 +31,50 @@
 
       <!-- card header -->
       <div class="card-header">
-        <h5 class="card-title"><a class="text-dark" href="{{url_for('post.view_post', post_id = post.id)}}">{{ post['title'] }}</a></h5>
-        <h6 class="card-subtitle">by <a class="text-muted" href="{{url_for('user.view_user', user_id = post.author.id)}}">{{
-          post.author.first_name | title}} {{post.author.last_name | title}}</a></h6>
+        <div class="row justify-content-evenly">
+          <div class="col">
+            <h5 class="card-title"><a class="text-dark" href="{{url_for('post.view_post', post_id = post.id)}}">{{
+                post['title'] }}</a></h5>
+
+            <h6 class="card-subtitle">by <a class="text-muted"
+                href="{{url_for('user.view_user', user_id = post.author.id)}}">{{
+                post.author.first_name | title}} {{post.author.last_name | title}}</a></h6>
+          </div>
+          <div class="col">
+            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+              class="fas fa-comment-alt"></i> {{post.view_count}}</a>
+            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+              class="fas fa-eye"></i> {{post.view_count}}</a>
+          </div>
+        </div>
       </div>
 
       <!-- card body -->
       <div class="card-body">
         <p class="card-text text-dark">{{ post['content'] |truncate(200,false,'...') }}</p>
         <hr>
-        <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i class="fas fa-book-reader"></i> Read More</a>
-        <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i class="fas fa-feather-alt"></i> More by this author</a>
+        <div>
+          <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i
+              class="fas fa-book-reader"></i> Read More</a>
+          <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+              class="fas fa-feather-alt"></i> More by this author</a>
+        </div>
       </div>
     </div>
   </div>
   {%endfor%}
 </div>
+{%else%}
+
+<div class="col-lg-8 col-md-6 col-sm-12">
+  <h3 class="text-muted">
+    You don't have any posts here :).
+  </h3>
+  </br>
+  <h4 class="text-muted">
+    Click the 'Add Post' button above to get started.
+  </h4>
+</div>
+{% endif %}
+
 {% endblock %}

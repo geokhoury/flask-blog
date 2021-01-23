@@ -7,18 +7,38 @@
 
 <!-- content block -->
 {% block main %}
-<form method="POST" action="">
-  {{form.hidden_tag()}}
-  <div class="row">
-    {{form.title.label}}
-    {{form.title()}}
+<div class="form-row">
+  <div class="col-lg-12 col-md-8">
+    <h1>
+      <i class="fas fa-feather"></i> Edit Post
+    </h1>
   </div>
-  <div class="row">
-    {{form.content.label}}
-    {{form.content()}}
-  </div>
+</div>
 
-  <hr class="mb-4" />
-  {{form.submit()}}
-</form>
+<div class="form-row">
+  <div class="col-lg-12">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+      <div class="row my-3">
+        <div class="col">
+          {{form.title.label}}
+          {{form.title(class_="form-control form-control-lg")}}
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col">
+          {{form.content.label}}
+          {{form.content(class_="form-control form-control-lg", style="height: 52vh;")}}
+        </div>
+      </div>
+      <hr class="mb-4" />
+      <div class="row my-3">
+        <div class="col">
+          {{form.update(class_="form-control btn btn-dark")}}
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
 {% endblock %}
