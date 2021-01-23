@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}{{title}}{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+<div class="row my-5 justify-content-between">
+    <div class="col-lg-6 col-md-8 col-sm-12 align-self-center">
+        <h1>
+            <i class="{{icon}}"></i> {{title}}
+        </h1>
+        <h4 class="text-muted my-3">Found {{posts | count}} results for the keyword <strong>'{{keyword}}'</strong>.</h4>
+    </div>
+</div>
+
+{% if posts %}
+<div class="row">
+
+    {% for post in posts %}
+    <div class="col-lg-4 col-md-6 col-sm-12">
+
+        <!-- post card -->
+        <div class="card bg-light mb-3">
+
+            <!-- card header -->
+            <div class="card-header">
+                <h5 class="card-title"><a class="text-dark" href="{{url_for('post.view_post', post_id = post.id)}}">{{
+                        post['title'] }}</a></h5>
+                <h6 class="card-subtitle">by <a class="text-muted"
+                        href="{{url_for('user.view_user', user_id = post.author.id)}}">{{
+                        post.author.first_name | title}} {{post.author.last_name | title}}</a></h6>
+
+                <div>
+                    <i class="fas fa-eye"></i> {{post.view_count}}
+                </div>
+            </div>
+
+            <!-- card body -->
+            <div class="card-body">
+                <p class="card-text text-dark">{{ post['content'] |truncate(200,false,'...') }}</p>
+                <hr>
+                <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i
+                        class="fas fa-book-reader"></i> Read More</a>
+                <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+                        class="fas fa-feather-alt"></i> More by this author</a>
+                {% if session['user'] %}
+                {% if post.author.id | string() == session['user'].id | string() %}
+                <a href="{{url_for('post.publish_post', post_id = post.id)}}" class="card-link text-dark"> <i
+                        class="fas fa-feather-alt"></i> Publish Post</a>
+                <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+                        class="fas fa-feather-alt"></i> Edit Post</a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{%else%}
+
+<div class="col-lg-8 col-md-6 col-sm-12">
+    <h3 class="text-muted">
+        No results found matching the keyword <strong>'{{keyword}}'</strong>.
+    </h3>
+</div>
+{% endif %}
+
+{% endblock %}
