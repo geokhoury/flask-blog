@@ -8,8 +8,7 @@ from blog import login_required
 user_bp = Blueprint('user', __name__)
 
 
-@user_bp.route('/add/user', methods=['GET', 'POST'])
-@login_required
+@user_bp.route('/user/add', methods=['GET', 'POST'])
 def add_user():
 
     # create instance of our form
@@ -34,6 +33,11 @@ def add_user():
         # # another way
         # my_user = User(username = 'cookie', password = '1234')
         # my_user.save()
+
+        flash("Account created successfully. Please log in.")
+
+        # redirect to login
+        return redirect(url_for('login.login'))
 
     # render the template
     return render_template("user/add-user.html", form=add_user_form)
@@ -92,7 +96,7 @@ def get_users():
 
     # get all users
     users = User.objects
-    
+
     # render 'user/list.html' blueprint with users
     return render_template('user/users.html', users=users)
 
@@ -100,7 +104,7 @@ def get_users():
 @user_bp.route('/user/view/<user_id>')
 def view_user(user_id):
     # get the user object
-    user = User.objects(id = user_id).first()
+    user = User.objects(id=user_id).first()
 
     if user:
         # render 'user/view-user.html' with the user
@@ -108,10 +112,11 @@ def view_user(user_id):
     else:
         return redirect('/404')
 
+
 @user_bp.route('/user/change_password', methods=['GET', 'POST'])
 def change_password():
-    user = User.objects(id = session['user']['id']).first()
-    
+    user = User.objects(id=session['user']['id']).first()
+
     change_password_form = ChangePasswordForm()
 
     if change_password_form.validate_on_submit():
@@ -126,4 +131,4 @@ def change_password():
             flash("Your password has been successfully changed.")
             return redirect(url_for('user.change_password'))
 
-    return render_template("user/change-password.html", form = change_password_form)
+    return render_template("user/change-password.html", form=change_password_form)
