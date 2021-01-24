@@ -23,6 +23,13 @@ class PostQuerySet(QuerySet):
     def get_user_drafts(self):
         return self.filter(published=False, author=ObjectId(session['user']['id']))
 
+    def get_user_favorites(self):
+        # get list of user favorite post ids
+        favorite_post_ids = User.objects(id=session['user']['id']).get().favorites
+
+        # filter the queryset
+        return self.filter(id__in=favorite_post_ids)
+
 
 class Post(Document):
     # define class metadata

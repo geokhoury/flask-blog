@@ -22,7 +22,7 @@ def add_user():
 
         # set object attributes
         user.username = add_user_form.username.data
-        user.password = add_user_form.password.data
+        user.password = user.encrypt_password(add_user_form.password.data)
         user.first_name = add_user_form.first_name.data
         user.last_name = add_user_form.last_name.data
         user.biography = add_user_form.biography.data

@@ -40,12 +40,6 @@
                 href="{{url_for('user.view_user', user_id = post.author.id)}}">{{
                 post.author.first_name | title}} {{post.author.last_name | title}}</a></h6>
           </div>
-          <div class="col">
-            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
-              class="fas fa-comment-alt"></i> {{post.view_count}}</a>
-            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
-              class="fas fa-eye"></i> {{post.view_count}}</a>
-          </div>
         </div>
       </div>
 
@@ -53,11 +47,27 @@
       <div class="card-body">
         <p class="card-text text-dark">{{ post['content'] |truncate(200,false,'...') }}</p>
         <hr>
-        <div>
-          <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i
-              class="fas fa-book-reader"></i> Read More</a>
-          <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
-              class="fas fa-feather-alt"></i> More by this author</a>
+        <div class="row">
+          <div class="col">
+            <a href="{{url_for('post.view_post', post_id = post.id)}}" class="card-link text-dark"> <i
+                class="fas fa-book-reader"></i> Read Post</a>
+          </div>
+          <div class="col">
+            <a href="{{url_for('post.mark_favorite', post_id = post.id)}}" class="card-link text-dark"> <i
+                class="fas fa-star"></i>Favorite</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+                class="fas fa-feather-alt"></i> By this author</a>
+          </div>
+          <div class="col">
+            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+                class="fas fa-comment-alt"></i> {{post.view_count}}</a>
+            <a href="{{url_for('user.view_user', user_id = post.author.id)}}" class="card-link text-dark"> <i
+                class="fas fa-eye"></i> {{post.view_count}}</a>
+          </div>
         </div>
       </div>
     </div>

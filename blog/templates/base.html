@@ -40,6 +40,7 @@
               My Posts
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{url_for('post.user_favorites')}}">Favorites</a>
               <a class="dropdown-item" href="{{url_for('post.user_drafts')}}">Drafts</a>
               <a class="dropdown-item" href="{{url_for('post.user_posts')}}">Published</a>
             </div>

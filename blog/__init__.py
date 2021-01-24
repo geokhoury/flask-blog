@@ -4,8 +4,9 @@ import json
 from flask import Flask, session, redirect, url_for, request
 from functools import wraps
 from mongoengine import *
-from blog.models import User, TextPost
+from blog.models import User, TextPost, Post
 from datetime import datetime
+from passlib.hash import pbkdf2_sha256
 
 def login_required(f):
     @wraps(f)
@@ -50,10 +51,12 @@ def create_app(test_config=None):
         User.drop_collection()
         Post.drop_collection()
 
-        bert = User(username='bert', password='1234', first_name='Bert',
+        common_password = pbkdf2_sha256.hash('1234')
+
+        bert = User(username='bert', password=common_password, first_name='Bert',
                     last_name='Sesame').save()
 
-        cookie = User(username='cookie', password='1234',
+        cookie = User(username='cookie', password=common_password,
                       first_name='Cookie', last_name='Monster').save()
 
         # Create TextPost

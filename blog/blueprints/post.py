@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 import datetime
 from bson import ObjectId
 
-from blog.models import TextPost
+from blog.models import TextPost, User
 from blog.forms import AddPostForm, EditPostForm
 
 # define our blueprint
@@ -45,6 +45,13 @@ def user_drafts():
     # render 'blog' blueprint with posts
     return render_template('post/posts.html', posts=user_drafts, title='Your Drafts', icon="fab fa-firstdraft")
 
+@post_bp.route('/posts/favorites')
+def user_favorites():
+    # get favorite user posts
+    user_favorites = TextPost.objects.get_user_favorites()
+
+    # render 'blog' blueprint with posts
+    return render_template('post/posts.html', posts=user_favorites, title='Your Favorites', icon="fas fa-star")
 
 @post_bp.route('/post/add', methods=['GET', 'POST'])
 def add_post():
@@ -69,8 +76,8 @@ def add_post():
             post.published = True
             post.save()
             # redirect to user_published
-            return redirect(url_for('post.user_posts'))            
-        
+            return redirect(url_for('post.user_posts'))
+
         post.save()
 
         # redirect to user_drafts
@@ -148,3 +155,11 @@ def delete_post(post_id):
 
     # render the view
     return redirect(url_for('post.index'))
+
+
+@post_bp.route('/post/<post_id>/favorite')
+def mark_favorite(post_id):
+    # Add post ID to favorites list
+    User.objects(id=session['user']['id']).update_one(add_to_set__favorites=post_id)
+    flash("Added as favorite.")
+    return redirect(url_for('post.user_favorites'))
