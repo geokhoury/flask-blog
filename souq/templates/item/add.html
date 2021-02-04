@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+<!-- header block -->
+{% block header %}
+<h1>{% block title %}Add Post{% endblock %}</h1>
+{% endblock %}
+
+<!-- content block -->
+{% block main %}
+<div class="row">
+  <div class="col p-5">
+    <form method="POST" action="">
+      {{form.hidden_tag()}}
+<div class="form-group">
+  {{form.title.label(class="col-form-label")}}
+  {{form.title(class="form-control")}}
+  {% for  error in form.errors.title %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
+</div>
+<div class="form-group">
+ <div class="w-25 d-inline-block">
+  {{form.price.label(class="col-form-label")}}
+  {{form.price(class="form-control",type="number", step="0.01")}}
+  {% for  error in form.errors.price %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
+ </div>
+ <div class="w-25 d-inline-block">
+  {{form.quantity.label(class="col-form-label")}}
+  {{form.quantity(class="form-control",type="number", step="0.01")}}
+  {% for  error in form.errors.quantity %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
+ </div>
+ <div class="w-25 d-inline-block">
+  {{form.selling_price.label(class="col-form-label")}}
+  {{form.selling_price(class="form-control",type="number", step="0.01")}}
+  {% for  error in form.errors.selling_price%}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
+ </div>
+</div>
+<div class="form-group">
+  {{form.body.label(class="col-form-label")}}
+  {{form.body(class="form-control",rows="6")}}
+  {% for  error in form.errors.body %}
+  <small class="text-danger form-text">
+  {{  error }}
+</small>
+{% endfor %}
+</div>
+<div class="form-group">
+  {{form.submit(class="btn btn-outline-success")}}
+</div>   
+    </form>
+  </div>
+</div>
+{% endblock %}

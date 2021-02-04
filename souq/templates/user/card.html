@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Souq - items{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+<h1>My Card / Favorite</h1>
+<div class="row">
+{% for item in my_card %}
+<div class="col-4 px-5 my-3">
+    <div class="card bg-dark">
+        <div class="card-body">
+            <h3 class="text-white">
+                {{item.item_name}}
+            </h3>
+        </div>
+        <div class="card-footer justify-content-between d-flex">
+            <a href="{{url_for('item.view_item', item_id = item.item_id)}}" class="card-link">View item</a>
+            <a href="{{url_for('item.delete_item_from_card', card_item_id = item.id)}}" class="btn btn-danger">Remove item</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+<div class="row">
+    <div class="col-xm-12 justify-content-between d-flex px-5 my-5">
+        <a href="{{url_for('item.buy')}}" class="btn btn-primary">Buy Now</a>
+    </div>
+</div>
+
+
+{% endblock main%}

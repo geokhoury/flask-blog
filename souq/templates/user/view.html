@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Souq - User{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+  <div class="card bg-light px-0 mb-5">
+    <div class="card-header mb-4">
+      <!-- Username -->
+      <h3 class="card-tille"><strong>{{user.username}}</strong></h3>
+
+    </div>
+    <!-- Content about this user -->
+    <div class="card-body px-3">
+      
+      {% if user.first_name and user.last_name%}
+      <p class="text-justify border-bottom">
+        Name : <span>{{user.first_name}}</span><span> {{user.last_name}}</span>
+      </p>
+      {% endif %}
+      {% if user.biography %}
+      <p class="text-justify border-bottom">
+        Biography: {{user.biography}}
+      </p>
+      {% endif %}
+      {% if user.birthday %}
+      <p class="text-justify border-bottom">
+        Birthday : {{user.birthday.strftime('%Y-%m-%d') }}
+      </p>
+      {% endif %}
+
+      <div class="ml-auto"><a class="btn btn-dark my-3" href="{{url_for('user.edit_user',id=session['user']['id'])}}">Edit Profile </a></div>
+      
+    </div>
+
+  </div>
+{% endblock %}

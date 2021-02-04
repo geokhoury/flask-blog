@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>{%block title%}Flask Souq{%endblock%}</title>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    {% assets "scss_all" %}
+    <link rel='stylesheet' type='text/css' href="{{ ASSET_URL }}">
+    {% endassets %}
+    
+</head>
+
+<body>
+  <!-- header -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+      <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand text-white font-aclonica" href="{{url_for('item.index')}}">MySouq</a>
+        <!-- Burger Menu Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Start Navbar -->
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- Left Side of Menu -->
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link text-white text-uppercase" aria-current="page" href="{{url_for('item.index')}}">items</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link text-white text-uppercase" aria-current="page" href="{{url_for('item.trending')}}">Trending</a>
+        </li>
+      </ul>
+
+      <div class="ml-auto mr-5">
+
+        <ul class="navbar-nav ">
+          {%if session['user'] %}
+          <li><a class="nav-link text-white text-uppercase" href="{{url_for('user.view_user',id=session['user']['id'])}}"><i
+            class="fas fa-user-circle"></i>
+          Profile</a></li>
+          <li><a class="nav-link text-white text-uppercase" href="{{url_for('user.card')}}"><i
+            class="fas fa-cart-plus"></i>
+          Card</a></li>
+      <li><a class="nav-link text-white text-uppercase" href="{{url_for('user.change_password')}}"><i class="fas fa-unlock-alt"></i>
+          Change Password</a></li>
+      <li>
+      </li>
+      <li><a class="nav-link text-white text-uppercase" href="{{url_for('login.logout')}}"> <i class="fas fa-sign-out-alt"></i>
+          Logout</a></li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link text-white" aria-current="page" href="{{url_for('user.register')}}">Sign Up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{{ url_for('login.login') }}">Login</a>
+      </li>
+      {% endif%}
+          </ul></div>
+      <!-- End Left Side of Menu -->
+      </div>
+      <!-- EndNav Items -->
+      </div>
+    </nav>
+  </header>
+
+  <!-- main -->
+  <main>
+    <!-- notification section -->
+    <section class="container-fluid">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-success mt-5" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn float-right btn-danger btn-flash" data-bs-dismiss="alert" aria-label="Close">X</button>
+      </div>
+      {% endfor %}
+    </section>
+
+    <!-- main block -->
+    <section id="main" class="container-fluid my-5">
+      {%block main%}
+      {%endblock%}
+    </section>
+  </main>
+
+  <!-- footer -->
+  <footer class="container-fluid bg-dark pt-5">
+    <!-- add footer here -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 p-2 col-sm-12 text-white">
+          Contact US
+          <ul>
+            <li>ICT6 - Web Application Development using Python</li>
+            <li>suhaib.qudah@altibbi.com</li>
+            <li>Developed by Flask framework</li>
+          </ul>
+        </div>
+        <div class="col-md-4 p-2 col-sm-12 text-white">
+          <h5 class="text-center">Social Media</h5>
+          <div class="row justify-content-center py-5 text-white">
+            <a class="mx-2" href="#"><i class="fab fa-facebook"></i></a>
+            <a class="mx-2" href="#"><i class="fab fa-twitter"></i></a>
+            <a class="mx-2" href="#"><i class="fab fa-whatsapp"></i></a>
+            <a class="mx-2" href="#"><i class="fab fa-instagram"></i></a>
+
+          </div>
+        </div>
+        <div class="col-md-4 p-2 col-sm-12 text-white">
+          About Us
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Voluptatum vitae voluptate a porro in asperiores possimus
+            distinctio dolorem maiores eligendi.</p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- importing our scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+    integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

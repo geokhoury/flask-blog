@@ -23,7 +23,7 @@ On a Linux based operating system you can run the following:
 * To start the stack
 
 ```bash
-cd flask_blog/
+cd flask_souq/
 docker-compose up -d
 ```
 

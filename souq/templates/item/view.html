@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<!-- title -->
+{% block title %}Flask Souq - Posts{% endblock %}
+
+
+<!-- content block -->
+{% block main %}
+
+<!-- posts header -->
+
+<div class="row mt-5">
+  <div class="col d-flex justify-content-between">
+    <h1>{{item.title}}</h1>
+      
+    
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 mr-auto my-5">
+   <div class="row">
+     <div class="col">
+      <p>{{item.content}}</p>
+      <div>
+          {% for tag in item.tags%}
+            <span class="badge bg-info p-2 text-white">{{tag}}</span>
+          {%endfor%}
+      </div>
+     </div>
+   </div>
+   {% if session['user'] %}
+   <div class="row">
+     <div class="col-lg-4 col-md-12">
+      <form method="POST" action="">
+        {{form.hidden_tag()}}
+
+            {{form.body.label(class="col-form-label")}}
+            {{form.body(class="form-control")}}
+        {{form.submit(class="btn btn-primary my-2")}}
+         </form>
+     </div>
+   </div>
+   {% endif %}
+    <div class="row">
+      <div class="col-md-12">
+        {% for comment in item.comments%}
+        <article class="alert alert-info text-white">
+          <p class="text-dark">{{comment.content}}</p>
+          {% if comment.author.id|string == session['user']['id']|string %}
+          <a class="btn btn-danger" href="{{url_for('item.delete_comment', item_id = item.id,content = comment.content)}}">Delete Post</a>
+          {% endif %}
+          </article>
+       {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
